@@ -1,0 +1,621 @@
+<!-- 20/10/2017 - Star Citizen 3.0 PTU - by qp -->
+<ActionMaps version="1" optionsVersion="2" rebindVersion="2" profileName="qp Warthog HOTAS for 3.0">
+
+<!-- 
+in this version:
+js1: warthog combined
+JS2: peddals
+js3: redated
+need to add gamepad as well
+-->
+
+
+ <CustomisationUIHeader label="qp 3.0" description="qp Warthog HOTAS for 3.0" image="">
+  <devices>
+   <keyboard instance="1"/>
+   <mouse instance="1"/>
+   <joystick instance="1"/>
+   <joystick instance="2"/>
+  </devices>
+  
+  <categories>
+   <category label="@ui_CCSpaceFlight"/>
+   <category label="@ui_CCFPS"/>
+   <category label="@ui_CCEVA"/>
+   <category label="@ui_CCVehicle"/>
+   <category label=""/>
+  </categories>
+  
+ </CustomisationUIHeader>
+ <options type="keyboard" instance="1"/>
+ <options type="joystick" instance="1"/>
+ <options type="joystick" instance="2">
+  <flight_move_roll exponent="0.5"/>
+  <flight_move_strafe_lateral exponent="0.5"/>
+ </options>
+ 
+
+<modifiers />
+
+ <actionmap name="spaceship_general">
+ 
+  <action name="v_eject">
+   <rebind input="js1_button24" activationMode="press"/>
+  </action>
+ 
+ </actionmap>
+
+  <actionmap name="spaceship_view">
+ <!-- clear bindings -->
+ 
+  <action name="v_view_pitch_down">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="v_view_pitch_up">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="v_view_yaw_right">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="v_view_yaw_left">
+   <rebind input="js1_ "/>
+  </action>
+
+  <action name="v_view_pitch">
+   <rebind input="js1_ "/>
+  </action>
+
+  <action name="v_view_yaw">
+   <rebind input="js1_ "/>
+  </action>
+
+  
+ <!-- add bindings -->
+   
+
+  <action name="v_view_dynamic_focus_out">
+   <rebind input="js1_button7"/>
+  </action>
+  
+  <action name="v_view_dynamic_focus_in">
+   <rebind input="js1_button6"/>
+  </action>
+
+  <action name="v_view_look_behind">
+   <rebind input="js1_button23"/>
+  </action>
+  
+  <action name="v_view_zoom_out">
+   <rebind input="js1_button7"/>
+  </action>
+  
+  <action name="v_view_zoom_in">
+   <rebind input="js1_button6"/>
+  </action>
+  
+  <action name="v_view_dynamic_focus">
+   <rebind input="js1_slider2"/>
+  </action>
+  
+ </actionmap>
+
+ <actionmap name="spaceship_movement">
+ 
+  <!-- clear bindings -->
+  
+  <action name="v_ifcs_toggle_vector_decoupling">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="v_toggle_landing_system">
+   <rebind input="js1_ "/>
+  </action>
+ 
+  <action name="v_cycle_landing_mode">
+   <rebind input="js1_ "/>
+  </action>
+ 
+  <action name="v_toggle_qdrive_system">
+   <rebind input="js1_ "/>
+  </action>
+ 
+  <action name="v_ifcs_mode_shift">
+   <rebind input="js1_ "/>
+  </action>
+
+  <action name="v_strafe_down">
+   <rebind input="js1_ "/>
+  </action>
+ 
+  <action name="v_strafe_up">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="v_yaw_mouse">
+   <rebind input="mo1_ "/>
+  </action>
+  
+  <action name="v_pitch_mouse">
+   <rebind input="mo1_ "/>
+  </action>
+  
+  <action name="v_strafe_forward">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="v_strafe_back">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="v_throttle_toggle_minmax">
+   <rebind input="kb1_ "/>
+  </action>
+ 
+ <!-- add bindings -->
+ 
+  <action name="v_throttle_zero">
+   <rebind input="js1_button18"/>
+  </action>
+ 
+  <action name="v_throttle_abs">
+   <rebind input="js1_slider1"/>
+  </action>
+ 
+  <action name="v_yaw">
+   <rebind input="js1_x"/>
+  </action>
+  
+  <action name="v_pitch">
+   <rebind input="js1_y"/>
+  </action>
+
+  <action name="v_strafe_longitudinal">
+   <rebind input="js1_z"/>
+  </action>
+
+  <action name="v_landing_target_lock">
+   <rebind input="js1_button14"/>
+  </action>
+
+  <action name="v_decoupled_strafe_longitudinal">
+   <rebind input="js1_z"/>
+  </action>
+  
+  <action name="v_decoupled_strafe_right">
+   <rebind input="js2_y"/>
+  </action>
+  
+  <action name="v_decoupled_strafe_left">
+   <rebind input="js2_x"/>
+  </action>
+  
+  <action name="v_decoupled_strafe_vertical">
+   <rebind input="js1_rotz"/>
+  </action>
+  
+  <action name="v_ifcs_toggle_comstab">
+   <rebind input="js1_button11"/>
+  </action>
+  
+  <action name="v_ifcs_toggle_gforce_safety">
+   <rebind input="js1_button10"/>
+  </action>
+
+  <action name="v_afterburner">
+   <rebind input="js1_button22"/>
+  </action>
+  
+  <action name="v_boost">
+   <rebind input="js1_button21"/>
+  </action>
+  
+  <action name="v_decoupled_brake">
+   <rebind input="js1_button19"/>
+  </action>
+  
+  <action name="v_decoupled_roll">
+   <rebind input="js2_rotz"/>
+  </action>
+  
+  <action name="v_ifcs_toggle_esp">
+   <rebind input="js1_button9" activationMode="hold"/>
+   <addbind input="js1_button8"/>
+  </action>
+  
+  <action name="v_strafe_right">
+   <rebind input="js2_y"/>
+  </action>
+  
+  <action name="v_strafe_left">
+   <rebind input="js2_x"/>
+  </action>
+  
+  <action name="v_strafe_vertical">
+   <rebind input="js1_rotz"/>
+  </action>
+  
+  <action name="v_target_match_vel">
+   <rebind input="js1_button13"/>
+  </action>
+  
+  <action name="v_brake">
+   <rebind input="js1_button19"/>
+  </action>
+  
+  <action name="v_roll">
+   <rebind input="js2_rotz"/>
+  </action>
+  
+  <action name="v_toggle_qdrive_engagement">
+   <rebind input="js1_button15"/>
+  </action>
+    
+  <action name="v_decoupled_pitch">
+   <rebind input="js1_y"/>
+  </action>
+  
+  <action name="v_decoupled_yaw">
+   <rebind input="js1_x"/>
+  </action>
+  
+ </actionmap>
+
+ <actionmap name="spaceship_targeting">
+ 
+  <!-- clear bindings -->
+ 
+  <action name="v_aim_yaw_left">
+   <rebind input="js1_ "/>
+  </action>
+ 
+  <action name="v_aim_yaw_right">
+   <rebind input="js1_ "/>
+  </action>
+
+  <action name="v_target_nearest_hostile">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="v_target_cycle_hostile_fwd">
+   <rebind input="js1_ "/>
+  </action>
+ 
+  <action name="v_target_cycle_all_fwd">
+   <rebind input="js1_ "/>
+  </action>
+ 
+  <action name="v_aim_pitch_down">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="v_aim_pitch_up">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="v_aim_pitch_mouse">
+   <rebind input="mo1_ "/>
+  </action>
+  
+  <action name="v_aim_yaw_mouse">
+   <rebind input="mo1_ "/>
+  </action>
+ 
+<!-- add bindings -->
+ 
+  <action name="v_aim_yaw">
+   <rebind input="js1_rotx"/>
+  </action>
+  
+  <action name="v_aim_pitch">
+   <rebind input="js1_roty"/>
+  </action>
+ 
+  <action name="v_target_cycle_reticle_mode">
+   <rebind input="js1_button12"/>
+  </action>
+
+  <action name="v_target_missile_lock_focused">
+   <rebind input="js1_button5"/>
+  </action>
+
+  <action name="v_target_reticle_focus">
+   <rebind input="js1_button26"/>
+  </action>
+  
+  <action name="v_toggle_weapon_gimbal_lock">
+   <rebind input="js1_button25"/>
+  </action>
+ 
+  <action name="v_target_head_tracking">
+   <rebind input="js1_button27"/>
+  </action>
+ 
+ </actionmap>
+ 
+<actionmap name="spaceship_turret">
+  <!-- clear bindings -->
+  
+  <action name="v_aim_pitch_down">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="v_aim_pitch_up">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="v_aim_yaw_left">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="v_aim_yaw_right">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="v_target_cycle_hostile_fwd">
+   <rebind input="js1_ "/>
+  </action>
+ 
+ <!-- add bindings -->
+ 
+  <action name="v_aim_yaw">
+   <rebind input="js1_x"/>
+  </action>
+ 
+ <action name="v_aim_pitch">
+   <rebind input="js1_y"/>
+  </action>
+  
+  <action name="v_target_reticle_focus">
+   <rebind input="js1_button26"/>
+  </action>
+  
+ </actionmap>
+ 
+ <actionmap name="spaceship_weapons">
+
+  <!-- clear bindings -->
+  
+  <!-- add bindings -->
+ 
+  <action name="v_attack1_group3">
+   <rebind input="js1_button3"/>
+  </action>
+  
+  <action name="v_attack1_group4">
+   <rebind input="js1_button4"/>
+  </action>
+  
+  <action name="v_attack1_group2">
+   <rebind input="js1_button2"/>
+  </action>
+  
+  <action name="v_attack1_group1">
+   <rebind input="js1_button1"/>
+  </action>
+  
+ </actionmap>
+
+ <actionmap name="spaceship_missiles">
+  <!-- clear bindings -->
+  
+  <!-- add bindings -->
+  
+  <action name="v_weapon_launch_missile">
+   <rebind input="js1_button5"/>
+  </action>
+ 
+ </actionmap>
+
+ <actionmap name="spaceship_defensive">
+  <!-- clear bindings -->
+  
+  <!-- add bindings -->
+  <action name="v_weapon_launch_countermeasure">
+   <rebind input="js1_button16"/>
+  </action>
+
+  <action name="v_weapon_cycle_countermeasure_fwd">
+   <rebind input="js1_button17"/>
+  </action>
+ 
+ </actionmap>
+
+ <actionmap name="spaceship_power">
+   <!-- clear bindings -->
+   
+  <action name="v_power_throttle_min">
+   <rebind input="js1_ " activationMode="press"/>
+  </action>
+  
+  <action name="v_power_throttle_max">
+   <rebind input="js1_ " activationMode="press"/>
+  </action>
+
+  <!-- add bindings -->  
+ 
+ </actionmap>
+
+ <actionmap name="player">
+ 
+  <!-- clear bindings -->
+  
+  <!-- add bindings -->
+  
+  <action name="Crouch">
+   <rebind input="kb1_mouse4"/>
+  </action>
+   
+  <action name="scan_toggle_mode">
+   <rebind input="kb1_capslock"/>
+  </action> 
+ 
+  <action name="spectate_zoom_out">
+   <rebind input="js1_button7"/>
+  </action>
+  
+  <action name="spectate_zoom_in">
+   <rebind input="js1_button6"/>
+  </action>
+  
+  <action name="xi_movey">
+   <rebind input="js1_z"/>
+  </action>
+
+  <action name="xi_rotateyaw">
+   <rebind input="js1_x"/>
+  </action>
+
+  <action name="xi_rotatepitch">
+   <rebind input="js1_y"/>
+  </action>
+  
+ </actionmap>
+
+ <actionmap name="zero_gravity_eva">
+
+ <!-- clear bindings -->
+  
+  <!-- add bindings -->
+ 
+  <action name="eva_pitch">
+   <rebind input="js1_y"/>
+  </action>
+
+  <action name="eva_yaw">
+   <rebind input="js1_x"/>
+  </action>
+
+  <action name="eva_roll">
+   <rebind input="js2_rotz"/>
+  </action>
+
+  <action name="eva_strafe_vertical">
+   <rebind input="js1_rotz"/>
+  </action>
+
+  <action name="eva_strafe_longitudinal">
+   <rebind input="js1_z"/>
+  </action>
+ 
+ </actionmap>
+ 
+ 
+ <actionmap name="vehicle_general">
+  <!-- clear bindings -->
+  
+  <!-- add bindings -->
+  <action name="v_view_pitch">
+   <rebind input="js1_roty"/>
+  </action>
+
+  <action name="v_view_yaw">
+   <rebind input="js1_rotx"/>
+  </action>
+
+  <action name="v_view_zoom_out">
+   <rebind input="js1_button7"/>
+  </action>
+  
+  <action name="v_view_zoom_in">
+   <rebind input="js1_button6"/>
+  </action>
+  
+  <action name="v_view_look_behind">
+   <rebind input="js1_button23"/>
+  </action>
+  
+ </actionmap>
+
+ <actionmap name="vehicle_driver">
+  <!-- clear bindings -->
+  
+  <action name="v_yaw_left">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="v_yaw_right">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="v_move_forward">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="v_move_back">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <!-- add bindings -->
+  
+  <action name="v_yaw">
+   <rebind input="js1_x"/>
+  </action>
+  
+  <action name="v_attack2">
+   <rebind input="js1_button5"/>
+  </action>
+  
+  <action name="v_attack1">
+   <rebind input="js1_button1"/>
+  </action>
+  
+  <action name="v_view_dynamic_focus">
+   <rebind input="js1_slider2"/>
+  </action>
+  
+ </actionmap>
+  
+ <actionmap name="vehicle_gunner">
+
+ <!-- clear bindings -->
+  
+  <!-- add bindings -->
+ 
+  <action name="v_attack2">
+   <rebind input="js1_button5"/>
+  </action>
+  
+  <action name="v_attack1">
+   <rebind input="js1_button1"/>
+  </action>
+  
+ </actionmap>
+ 
+ <actionmap name="spectator">
+ 
+  <!-- clear bindings -->
+  
+  <!-- add bindings -->
+ 
+  <action name="spectate_zoom">
+   <rebind input="js1_slider2"/>
+  </action>
+  
+ </actionmap>
+ 
+ <actionmap name="player_choice">
+  
+  <!-- clear bindings -->
+
+  <action name="pc_interaction_mode">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="pc_select">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="pc_focus">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <!-- add bindings -->
+ 
+  
+ </actionmap>
+ 
+ 
+</ActionMaps>
