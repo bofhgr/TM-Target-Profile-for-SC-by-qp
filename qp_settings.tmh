@@ -1,0 +1,46 @@
+//**************************************************************************
+//	STAR CITIZEN TARGET Profile
+//		- For the Thrustmaster Warthog HOTAS
+//		
+//		Written by qp
+// 		https://robertsspaceindustries.com/citizens/q-p
+//
+//**************************************************************************
+
+// Center Stick Mounting Rotation Fix
+	define Stick_Rotation 45 // use 0 if you haven't modified your warthog for center mounting (default), otherwise use the degrees of rotation clockwise
+
+// User-defined Settings
+	define User_Devices_Pedals 0 // not used ****
+	define User_Devices_HeadTracking 0 // not used ****
+	define User_Devices_Center_Joystick 0 // not used ****
+	
+// Custom Curves and Scale for analog axis
+	define SCMMode_Curve 3
+	define SCMMode_Scale 1 // should be 0 for most people, 1 for center mount at 45 degrees
+//	define Rotation_Scale 0.039015
+	define PREMode_Curve 3
+	define PREMode_Scale -2
+	define CRUMode_Curve 1
+	define CRUMode_Scale 1
+	define Mouse_Curve 5
+	define Mouse_Scale -5
+	define Mouse_Deadzone 15
+	
+	
+// Timers
+	define Countermeasure_Timer 100
+	define Targeting_Hold_Timer 500
+	define Eject_Hold_Timer 1100
+	define Auto_Land_Hold_Timer 800
+	define HUD_Response_Timer 1250
+	define Initialization_Timer 2500
+
+// Other user-defined settings
+	define Left_Throttle_Deadzone 15
+	define Right_Throttle_Deadzone 15
+	define LED_Level 128
+	
+// End of File
+// qp
+// .

@@ -1,0 +1,184 @@
+//**************************************************************************
+//	STAR CITIZEN TARGET Profile
+//		- For the Thrustmaster Warthog HOTAS
+//		
+//		Written by qp
+// 		https://robertsspaceindustries.com/citizens/q-p
+//
+//**************************************************************************
+
+// Flight
+	define Flight_QD_Engage DX15
+	define Flight_QD_HUD 'b'
+	define Flight_Eject DX24
+	define Flight_Auto_Land 'n' // hold
+	define Flight_Landing_Mode 'n' // tap
+	define Flight_Landing_Request DX14 // not used
+	define Flight_Mode_Switch 'v' // deprecated as of 2.6
+	define Flight_Match_Target_Velocity DX13
+	define Flight_Self_Destruct L_ALT + BSP
+	define Flight_Mouse_Mode_Toggle R_ALT + 'm' // 2.6 r_alt+m called look ahead <- this I need on
+	define Flight_Mouse_Aim_Mode R_SHIFT // ? new in 2.6
+	define Flight_Mouse_Move_Mode R_ALT + ','
+	define Flight_Ready_Mode F5
+	
+// Weapons
+	define Weapons_Fire_G1 DX1
+	define Weapons_Fire_G2 DX2
+	define Weapons_Fire_G3 DX3
+	define Weapons_Fire_G4 DX4
+	define Weapons_Missile DX5
+	define Weapons_Reticle_Mode DX12 
+	define Weapons_Gimble_Lock DX25
+	define Weapons_Countermeasure_Launch DX16
+	define Weapons_Countermeasure_Change DX17
+	
+// Targeting
+	define Targeting_Focus_Reticle 'r'
+	define Targeting_Cycle_Pinned_Target 'o'
+	define Targeting_Cycle_Back_Pinned_Target 'l'
+	define Targeting_Nearest_Hostile 't'
+	define Targeting_Pin_Target 'p'
+	define Targeting_Cycle_Hostile 'y'
+	define Targeting_Cycle_Back_Hostile 'h'
+	define Targeting_Cycle_Friendly 'u'
+	define Targeting_Cycle_Back_Friendly 'j'
+	define Targeting_Cycle_All 'i'
+	define Targeting_Cycle_Back_All 'k'
+	define Targeting_Scan_Mode TAB
+	define Targeting_Target_Focus L_ALT + 'r'
+	
+// Shields
+	define Shields_Reset KP5
+	define Shields_Transfer_Forward KP8
+	define Shields_Transfer_Backward KP2
+	define Shields_Transfer_Left KP4
+	define Shields_Transfer_Right KP6
+	define Shields_Transfer_Top KP7
+	define Shields_Transfer_Bottom KP9
+	
+// Systems
+	define Systems_Power_Weapons '1'
+	define Systems_Power_Shields '2'
+	define Systems_Power_Engines '3'
+	define Systems_Toggle_Weapons '4'
+	define Systems_Toggle_Shields '5'
+	define Systems_Toggle_Engines '6'
+	define Systems_Power_Reset '0'
+	define Systems_IFCS_Decouple 'c'
+	define Systems_IFCS_GSafe DX10
+	define Systems_IFCS_COMSTAB DX11
+	define Systems_IFCS_ESP_Toggle DX8
+	define Systems_IFCS_ESP DX9
+	define Systems_Toggle_Lights L_ALT + 't'
+	define Systems_Radar_Range ','
+	define Systems_Cooler_Increase_Rate L_ALT + KP8
+	define Systems_Cooler_Decrease_Rate L_ALT + KP7
+	define Systems_Power_Decrease L_ALT + KP4
+	define Systems_Power_Increase L_ALT + KP5
+
+// HUD
+	define HUD_Up USB[0x52] // Up Arrow
+	define HUD_Down USB[0x51] // Down Arrow
+	define HUD_Left USB[0x50] // Left Arrow
+	define HUD_Right USB[0x4F] // Right Arrow
+	define HUD_Select USB[0x09] // f
+	define HUD_Accept USB[0x28] // Enter
+	define HUD_HUDMode F3
+	define HUD_Show_Shields F8
+	define HUD_Show_Power F7
+	define HUD_Show_Weapons F6
+	define HUD_Show_Overview F5
+	define HUD_Cancel USB[0x15] // r
+	define HUD_Screen_Left USB[0x14] // q
+	define HUD_Screen_Right USB[0x08] // e	
+	define HUD_MFD_Up 'w'
+	define HUD_MFD_Down 's'
+	define HUD_MFD_Left 'a'
+	define HUD_MFD_Right 'd'
+	define HUD_Show_Mouse_Cursor R_ALT + '/'
+	
+// Movement
+	define Movement_Boost DX21
+	define Movement_Afterburner DX22
+	define Movement_Break DX19
+	define Movement_Strafe_Up SPC
+	define Movement_Strafe_Down L_CTL
+	define Movement_Strafe_Right 'd'
+	define Movement_Strafe_Left 'a'
+	define Movement_Strafe_Forward 'w'
+	define Movement_Strafe_Backward 's'
+	define Movement_Roll_Left 'q'
+	define Movement_Roll_Right 'e'
+	define Movement_Throttle_Zero DX18
+	
+// Views
+	define View_Center_HeadTracking R_ALT + BRK
+	define View_TrackIR_Precision R_ALT + F7
+	define View_Head_Tracking L_ALT + 'r' // depricated use target focus ** check to see nowhere used
+	define View_Switch F4 // *** need to add hold functions for camera director shit
+	//define View_Free_Look 'z' 	// free look mode in xml -  ****
+	define View_Zoom_In DX6
+	define View_Zoom_Out DX7
+	define View_Look_Behind DX23 // camera view mode - orbit cam ? ****
+	define View_Mobiglass F1 // also mobiglass
+	define View_ARMode 'f' //view scoreboard removed?
+	define View_Chat F12
+	define View_Contacts F11
+	define View_Camera_Mode L_ALT + 'z' // same as look behind but works only on 3rd person cam? ****
+	
+// Camera
+	define Camera_Target_Offset_Up UARROW
+	define Camera_Target_Offset_Left LARROW
+	define Camera_Target_Offset_Right RARROW
+	define Camera_Target_Offset_Down DARROW
+	define Camera_Reset_Previous_View USB[0x55] // *
+	define Camera_DoF_Increase USB[0x57] // +
+	define Camera_DoF_Decrease USB[0x56] // -
+	define Camera_Background_Blur_Increase USB[0x4A] // Home
+	define Camera_Background_Blur_Decrease USB[0x4D] // End
+	define Camera_Strafe_Up PGUP
+	define Camera_Strafe_Down PGDN
+	define Camera_Zoom_In DX6
+	define Camera_Zoom_Out DX7
+	define Camera_Toggle_Orbit_Cam USB[0x1D] // z
+	
+// Others
+	define Others_TeamSpeak_PTT SCRLCK // would be nice to add a hotmic mode *****
+
+// Direct X Button Assignments
+	// DX1 Fire G1
+	// DX2 Fire G2
+	// DX3 Fire G3
+	// DX4 Fire G4
+	// DX5 Lock/Fire Missiles
+	// DX6 Zoom In
+	// DX7 Zoom Out
+	// DX8 ESP Pulse
+	// DX9 ESP Hold
+	// DX10 GSafe
+	// DX11 COMSTAB
+	// DX12 Reticle Mode
+	// DX13 Match Target Velocity
+	// DX14 Landing Request
+	// DX15 Engage QD
+	// DX16 CM Launch
+	// DX17 CM Change
+	// DX18 Zero Throttle
+	// DX19 Brake
+	// DX21 Boost
+	// DX22 Afterburner
+	// DX23 Look Behind
+	// DX24 Eject
+	// DX25 Gimble Lock
+	// DX26 Target Reticle Focus // reverted to 'r' default
+	// DX27 Target_Head_Tracking
+	// DX28 ** Reserved
+	// DX29 ** Reserved
+	// DX30 ** Reserved
+	// DX31 ** Reserved
+	// DX32 ** Reserved
+	
+// End of File
+// qp
+// .

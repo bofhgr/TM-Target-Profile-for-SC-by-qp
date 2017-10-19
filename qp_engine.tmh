@@ -1,0 +1,215 @@
+//**************************************************************************
+//	STAR CITIZEN TARGET Profile
+//		- For the Thrustmaster Warthog HOTAS
+//		
+//		Written by qp
+// 		https://robertsspaceindustries.com/citizens/q-p
+//
+//**************************************************************************
+
+// 1.0 HUD Interaction - in 2.6 used only for mouse mode for SC X/Y
+	// 1.1 HUD_Mode_Engage
+		// maps Slew control to Mouse and Click
+		// maps DMS to HUD Screen Focus
+		int HUD_Mode_Engage()
+		{	
+			//ActKey (KEYON + PULSE + HUD_HUDMode);
+			//MapAxis(&Throttle, SCX, MOUSE_X_AXIS, AXIS_NORMAL, MAP_RELATIVE);
+			//MapAxis(&Throttle, SCY, MOUSE_Y_AXIS, AXIS_NORMAL, MAP_RELATIVE);
+			//SetSCurve(&Throttle, SCX, 0, Mouse_Deadzone, 0, Mouse_Curve, Mouse_Scale);
+			//SetSCurve(&Throttle, SCY, 0, Mouse_Deadzone, 0, Mouse_Curve, Mouse_Scale);
+			//ActKey(KEYON+PULSE+HUD_Show_Mouse_Cursor);
+			ActKey(KEYON+DOWN+View_ARMode);
+			MapKey(&Throttle, SC, MOUSE_LEFT);
+		}	
+		
+	// 1.2 HUD_Mode_Disengage
+		// maps Slew control to Strafe and look behind
+		int HUD_Mode_Disengage()
+		{	
+			//ActKey (KEYON + PULSE + HUD_HUDMode);
+			ActKey(KEYON+UP+View_ARMode);
+			//MapAxis(&Throttle, SCX, DX_XROT_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+			//MapAxis(&Throttle, SCY, DX_YROT_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
+			//if (Flight_Mode==1)
+			//{	
+			//			SetSCurve(&Throttle, SCX, 0, 50, 0, 0, 0);
+			//			SetSCurve(&Throttle, SCY, 0, 50, 0, 0, 0);
+			//}	
+			//	else if (Flight_Mode==2)
+			//	{	
+			//			SetSCurve(&Throttle, SCX, 0, 50, 0, 0, 0);
+			//			SetSCurve(&Throttle, SCY, 0, 50, 0, 0, 0);
+			//	}	
+			//	else if (Flight_Mode==3)
+			//	{	
+			//			SetSCurve(&Throttle, SCX, 0, 50, 0, 0, 0);
+			//			SetSCurve(&Throttle, SCY, 0, 50, 0, 0, 0);
+			//	}
+			//ActKey(KEYON+PULSE+HUD_Show_Mouse_Cursor);
+			MapKeyIO(&Throttle, SC, Flight_Mouse_Move_Mode, Flight_Mouse_Mode_Toggle);
+		}	
+		
+	// 1.3 HUD Magic
+		// Allows to cycle through HUD tabs
+	//	int HUD_INDEX = 0;
+	//	int HUD_Cmds[4] = {KEYON + PULSE + HUD_Show_Overview, KEYON + PULSE + HUD_Show_Weapons, KEYON + PULSE + HUD_Show_Power, KEYON + PULSE + HUD_Show_Shields};
+
+// 2.0 Custom Curves with each Flight Mode | 3 + Decouple on IO ? Flight Modes
+	// 2.1 SCM Mode - Aiming
+		int SCMMode()
+			{	
+			// SetSCurve(&Device, axis name, left_deadzone, center_deadzone, right_deadzone, curve, scale)
+			// SCM mode curves improves control near the center for better aiming and accelerated motions in edges for faster turns
+			// Combat Mode gives Throttle control on Right stick (curve for fine AB control)
+			MapAxis(&Throttle, THR_RIGHT, DX_THROTTLE_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+			//MapAxis(&Throttle, THR_FC, DX_Z_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
+			SetSCurve(&Joystick, JOYX, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+			SetSCurve(&Joystick, JOYY, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+			//SetSCurve(&Throttle, THR_FC, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+			SetSCurve(&Throttle, THR_LEFT, 0, Left_Throttle_Deadzone, 0, SCMMode_Curve, SCMMode_Scale);
+			SetSCurve(&Throttle, THR_RIGHT, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+			SetSCurve(&Throttle, SCX, 0, 50, 0, 0, 0);
+			SetSCurve(&Throttle, SCY, 0, 50, 0, 0, 0);
+			ActKey(KEYON + PULSE + Movement_Throttle_Zero);
+			ActKey(KEYON + PULSE + Movement_Throttle_Zero);
+			// ActKey (KEYON + PULSE + Flight_Mode_Switch);
+			Flight_Mode=1;
+			}	
+	
+	// 2.2 PRE Mode - Precision
+		int PREMode()
+			{	
+			// SetSCurve(&Device, axis name, left_deadzone, center_deadzone, right_deadzone, curve, scale)
+			// PRE mode curves increase Sensitivity and limits thruster output to 50% of max for smooth landings
+			// Pre mode gives longitudinal strafe (f/b) controls on Right Stick
+			MapAxis(&Throttle, THR_RIGHT, DX_Z_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
+			//MapAxis(&Throttle, THR_FC, DX_THROTTLE_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+			SetSCurve(&Joystick, JOYX, 0, 0, 0, PREMode_Curve, PREMode_Scale);
+			SetSCurve(&Joystick, JOYY, 0, 0, 0, PREMode_Curve, PREMode_Scale);
+			//SetSCurve(&Throttle, THR_FC, 0, 0, 0, PREMode_Curve, PREMode_Scale);
+			SetSCurve(&Throttle, THR_LEFT, 0, 2*Left_Throttle_Deadzone, 0, PREMode_Curve, PREMode_Scale);
+			SetSCurve(&Throttle, THR_RIGHT, 0, 2*Right_Throttle_Deadzone, 0, PREMode_Curve, PREMode_Scale);
+			SetSCurve(&Throttle, SCX, 0, 50, 0, 0, 0);
+			SetSCurve(&Throttle, SCY, 0, 50, 0, 0, 0);
+			ActKey(KEYON + PULSE + Movement_Throttle_Zero);
+			ActKey(KEYON + PULSE + Movement_Throttle_Zero);
+			// ActKey (KEYON + PULSE + Flight_Mode_Switch);
+			Flight_Mode=2;
+			}	
+	
+	// 2.3 CRU Mode - Agility
+		int CRUMode()
+			{	
+			// SetSCurve(&Device, axis name, left_deadzone, center_deadzone, right_deadzone, curve, scale)
+			// CRU mode curves increase Agility for fastest turns and gives 100% thruster output at 2/3 of motion
+			// not sure of above, used for close combat dogfights, gives strafe not throttle
+			MapAxis(&Throttle, THR_RIGHT, DX_Z_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
+			//MapAxis(&Throttle, THR_FC, DX_THROTTLE_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+			SetSCurve(&Joystick, JOYX, 0, 0, 0, CRUMode_Curve, CRUMode_Scale);
+			SetSCurve(&Joystick, JOYY, 0, 0, 0, CRUMode_Curve, CRUMode_Scale);
+			//SetSCurve(&Throttle, THR_FC, 0, 0, 0, CRUMode_Curve, CRUMode_Scale);
+			SetSCurve(&Throttle, THR_LEFT, 0, Left_Throttle_Deadzone/2, 0, CRUMode_Curve, CRUMode_Scale);
+			SetSCurve(&Throttle, THR_RIGHT, 0, Right_Throttle_Deadzone/2, 0, CRUMode_Curve, CRUMode_Scale);
+			SetSCurve(&Throttle, SCX, 0, 50, 0, 0, 0);
+			SetSCurve(&Throttle, SCY, 0, 50, 0, 0, 0);
+			ActKey(KEYON + PULSE + Movement_Throttle_Zero);
+			ActKey(KEYON + PULSE + Movement_Throttle_Zero);
+			// ActKey (KEYON + PULSE + Flight_Mode_Switch);
+			Flight_Mode=3;
+			}	
+	
+// 3.0 Countermeasures
+//Used together with paddle to launch 2 sets of countermeasures
+	// 3.1 Flares
+		int CMFlare()
+		{	
+			if(countermeasure) 
+				ActKey(KEYON + PULSE + Weapons_Countermeasure_Launch); 
+			else 
+				ActKey(CHAIN(KEYON + PULSE + Weapons_Countermeasure_Change,	D(Countermeasure_Timer)	,	KEYON + PULSE + Weapons_Countermeasure_Launch));
+				countermeasure=1;
+		}
+	
+	// 3.2 Chaff
+		int CMChaff()
+		{	
+			if(countermeasure) 
+				ActKey(CHAIN(KEYON + PULSE + Weapons_Countermeasure_Change,	D(Countermeasure_Timer)	,	KEYON + PULSE + Weapons_Countermeasure_Launch)); 
+			else
+				ActKey(KEYON + PULSE + Weapons_Countermeasure_Launch);
+				countermeasure=0;
+		}
+		
+	// 3.3 Flare, Flare, Flare
+	// 3.4 Chaff, Chaff, Chaff
+	// 3.5 F/C, F/C, F/C
+	// 3,6 Launch 3 of whatever is selected
+	// keep in mind to toggle the cmflag every time you change countermeasures
+	//	int CMAll()
+	//	{
+	//	//drops 2 each	ActKey(CHAIN(KEYON+PULSE+Weapons_Countermeasure_Launch,D(50),KEYON+PULSE+Weapons_Countermeasure_Change,D(50),KEYON+PULSE+Weapons_Countermeasure_Launch,D(50),KEYON+PULSE+Weapons_Countermeasure_Change,D(50),KEYON+PULSE+Weapons_Countermeasure_Launch,D(50),KEYON+PULSE+Weapons_Countermeasure_Change,D(50),KEYON+PULSE+Weapons_Countermeasure_Launch));
+	//		ActKey(CHAIN(KEYON+PULSE+Weapons_Countermeasure_Launch,D(50),KEYON+PULSE+Weapons_Countermeasure_Change,D(50),KEYON+PULSE+Weapons_Countermeasure_Launch));
+	//	}
+
+// 4.0 Shields 
+	// Shield Management briefly shows Shield HUD when changing shields
+	int DoShields(int Key_Input)
+	{
+		//ActKey(KEYON + PULSE + HUD_Show_Shields);
+		ActKey(KEYON + Key_Input);
+	}
+
+// 5.0 AfterBurner 
+	// 5.1 Activates Afterburner
+	int AfterBurnerON()
+	{
+		ActKey(KEYON + Movement_Afterburner);
+	}
+	
+	// 5.2 Deactivates Afterburner
+	int AfterBurnerOFF()
+	{
+		ActKey(Movement_Afterburner);
+	}
+	
+// 6.0 Cycling HUD
+//deprecated as of 3.0
+	// int CycleHUD(int iOffset)
+	// {
+	// 	// Controls the HUD tab order in cycling the HUD
+	// 	HUD_INDEX = HUD_INDEX + iOffset;
+	// 	if(HUD_INDEX < 0)
+	// 		HUD_INDEX = 3;
+	// 	if(HUD_INDEX > 3)
+	// 		HUD_INDEX = 0;
+	// 		
+	// 	ActKey(HUD_Cmds[HUD_INDEX]);
+	// }
+
+// 7.0 HUD Responds to changing shield and power settings
+//deprecated as of 3.0
+	//int OnHUDCallback(int param)
+	//{
+	//	// Pressing any of the below buttons will make the HUD flash with relative info and then return to overview
+	//	if(Throttle[RDRNRM] | Throttle[MSD] | Throttle[MSU] | Joystick[H3U] | Joystick[H3D] | Joystick[H3L] | Joystick[H3R])
+	//		return 0;
+	//	// Otherwise, set the HUD back to the Overview
+	//	ActKey(KEYON + PULSE + HUD_Show_Overview);
+	//	HUD_INDEX = 0;
+	//}
+
+// 10.0 Firing Mode TG1 TG2
+
+
+// 9.0 EventHandle
+	int EventHandle(int type, alias o, int x)
+	{
+		DefaultMapping(&o, x);
+	}
+
+
+	
+// End of File
+// qp
+// .

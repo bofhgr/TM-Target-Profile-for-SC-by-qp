@@ -1,0 +1,574 @@
+//**************************************************************************
+//	STAR CITIZEN TARGET Profile
+//		- For the Thrustmaster Warthog HOTAS
+//		
+//		Written by qp
+// 		https://robertsspaceindustries.com/citizens/q-p
+//
+//**************************************************************************
+
+// Version Info
+// Updated for Star Citizen 3.0 PTU
+// Last Update: Oct 20 2017
+
+//system("spawn -w\"software main folder" \ "exe shortcut"");
+	
+	//DirectX Axis assignment - 6 Degrees of Freedom
+//DX_X_Axis: JoyX | Directional Rotational Axis - Yaw
+//DX_Y_Axis: JoyY | Lateral Rotational Axis - Pitch
+//DX_Throttle Axis: THR_Right | 0-100 throttle value 
+//DX_Slider_Axis: THR_FC | View Zoom (3.0) 
+//DX_ZRot_Axis: THR_Left | Vertical Translational Axis
+//DX_Z_Axis: THR_Right | Longitudinal Translational Axis
+//DX_XRot_Axis: SCx | Controls Targeting Aim/Freelook option
+//DX_YRot_Axis: SCy | Controls Targeting Aim/Freelook option
+// peddals R/L: - | Lateral Translational AXIS_NORMAL
+// peddals Roll: - | Longitudinal Rotational Axis - Roll
+
+// ToDo List
+// SC button:?? RIGGHT SHIFT makes you look straight ahead? for viewing use aim axis not view axis in 2.6?
+// EFL 2 top switches not bound
+// Flaps mode needs refinement
+//added director camera controls, remaining customized camera recall with hat1 or similar + hold to recordccamera
+
+// 0.1 Initialize Variables & Options
+	// Include basic TARGET instructions
+	include "target.tmh"
+	// Include user customizable settings
+	include "qp_settings.tmh"
+	// Include custom bindings and keyboard mappings
+	include "qp_mapping.ttm"
+	// Include custom scripts and routines
+	include "qp_engine.tmh"
+	
+// 0.2 custom flags
+	// create a flag to track countermeasures
+	char countermeasure;
+	// create a flag to track Flight Mode
+	char Flight_Mode;
+	// create a flag to track Ship and FPS lights
+	char Lights_Ship;
+	char Lights_FPS;
+
+// 1.0 Main Initialization
+	int main()
+	{	
+		// Configure for ThrustMaster Warthog HOTAS
+		Configure(&HCougar, MODE_EXCLUDED);
+		Configure(&T16000, MODE_EXCLUDED);
+		Configure(&LMFD, MODE_EXCLUDED);
+		Configure(&RMFD, MODE_EXCLUDED);
+		Configure(&TWCSThrottle, MODE_EXCLUDED);
+		Configure(&TFRPRudder, MODE_EXCLUDED);
+		// Set repeat delay for keyboard commands
+		SetKBRate(25, 60);
+		// declare the event handler, return on error
+		if(Init(&EventHandle)) return 1; 
+	
+	// 1.1 Axis Assignment - Rotation Axis
+		// JoyX - Yaw
+		MapAxis(&Joystick, JOYX, DX_X_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+		// JoyY - Pitch
+		MapAxis(&Joystick, JOYY, DX_Y_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+		// Roll Axis on Pedals
+		//not implemented until I get the pedals :D
+	// 1.2 Axis Assignment - Translation Axis
+		// THR_Right - Right Throttle - FW/BW - Longitudinal Motion
+		MapAxis(&Throttle, THR_RIGHT, DX_THROTTLE_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+		// THR_Left - Left Throttle - UP/DN - Vertical Motion
+		MapAxis(&Throttle, THR_LEFT, DX_ZROT_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
+		// THR_FC - Slider - To be used for Zoom In/Out TrackIR
+		MapAxis(&Throttle, THR_FC, DX_SLIDER_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
+
+	// SC X, Y currently tied to aiming mode, will move aim reticle and help auto-center after couple seconds idle
+		MapAxis(&Throttle, SCX, DX_XROT_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+		MapAxis(&Throttle, SCY, DX_YROT_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
+	
+	// 1.3 Center Joystick Rotation
+		// Center-Mounted Stick rotation
+		RotateDXAxis(DX_X_AXIS, DX_Y_AXIS, Stick_Rotation);
+
+	// 1.4 Analog Axis Curves initialization - starting with SCM Flight mode enabled for all axis
+		SetSCurve(&Joystick, JOYX, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+		SetSCurve(&Joystick, JOYY, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+		SetSCurve(&Throttle, THR_LEFT, 0, Left_Throttle_Deadzone, 0, SCMMode_Curve, SCMMode_Scale);
+		SetSCurve(&Throttle, THR_RIGHT, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+		SetSCurve(&Throttle, THR_FC, 0, 0, 0, 0, 0);
+		SetSCurve(&Throttle, SCX, 0, 50, 0, 0, 0);
+		SetSCurve(&Throttle, SCY, 0, 50, 0, 0, 0);
+	
+	// 1.5 Custom Functions Initialization 
+		//declare starting countermeasure=flare, change to 0 for chaff
+		countermeasure=1;
+		//Set enhanced IFCS Flight Mode (1=SCM, 2=PRE, 3=CRU)
+		Flight_Mode=1;
+		
+	// 1.6 Shift State (I/O) and Layers (U/M/D)
+		// IO Shift is Joystick Paddle (S4) 
+			// Paddle will be used with various keys to give you quick access to more commmands
+		// UMD Layer selector is FLAPS
+			// FLAPS switch will reflect what control scheme is active for the Warthog HOTAS (WIP)
+			// UP for when you are in Augmented Reality Mode (new in 3.0)
+			// MVR for when you are in flight, combat or otherwise
+			// DN when you are in Camera Director Mode
+		SetShiftButton(&Joystick, S4, &Throttle, FLAPU, FLAPD);
+	// 1.xx Shift State Quick Refference
+	// Using the Paddle (Joystick S4) will affect the following Keys:
+		// Coolie Hat (normaly strafe) will strafe fw/back and roll
+	// With Flaps UP the following keys act differently than normal:
+		// DMS should move the view around the MFDs
+		// thumb button should interact with MFD (arrow keys?)
+	// Flaps MVR (middle) is considered normal
+	// With Flaps DOWN the following keys act differently than normal:
+		//
+	// DMS should control MFD up down etc (wasd)
+	// Thumb on Joy should control the cursor/menu on the screens (arrow keys)
+	// while Flaps is Forward (UP) freelook mode should be enabled, 2.5: hold 'z'
+		
+
+// 2.0 Throttle Mappings
+	
+	//2.5 FLAPS
+		// Flaps when moved Forward (UP) will Augemented Reality mode (interaction mode)
+		MapKey(&Throttle, FLAPU, EXEC ("HUD_Mode_Engage();"));
+		MapKeyR(&Throttle, FLAPU, EXEC ("HUD_Mode_Disengage();"));
+		// for flaps down to control cameas: http://scfocus.org/camera-controls/
+		MapKey(&Throttle, FLAPD, DOWN + View_Switch);
+		MapKeyR(&Throttle, FLAPD, UP + View_Switch);
+	
+	
+	
+	
+	// 2.2 Coolie Switch (CS)
+		// LEFT
+		MapKeyIOUMD(&Throttle, CSL, 
+			//FLAPS UP (MFD/HUD Interaction Mode) (MFD/HUD Customize Mode) and Paddle
+		0,
+			//FLAPS UP (MFD/HUD Interaction Mode) (MFD/HUD Customize Mode)
+		0,
+			//Flaps MVR (Flight mode) and Paddle
+		Movement_Roll_Right,
+			//Flaps MVR (Flight mode)
+		Movement_Strafe_Left,
+			//Flaps DN (Camera Director Mode) and Paddle
+		0,
+			//Flaps DN (Camera Director Mode)
+		0);
+		// RIGHT
+		MapKeyIOUMD(&Throttle, CSR, 
+			//FLAPS UP (MFD/HUD Interaction Mode) (MFD/HUD Customize Mode) and Paddle
+		0,
+			//FLAPS UP (MFD/HUD Interaction Mode) (MFD/HUD Customize Mode)
+		0,
+			//Flaps MVR (Flight mode) and Paddle
+		Movement_Roll_Right,
+			//Flaps MVR (Flight mode)
+		Movement_Strafe_Right,
+			//Flaps DN (Camera Director Mode) and Paddle
+		0,
+			//Flaps DN (Camera Director Mode)
+		0);
+		// UP
+		MapKeyIOUMD(&Throttle, CSU, 
+			//FLAPS UP (MFD/HUD Interaction Mode) (MFD/HUD Customize Mode) and Paddle
+		0,
+			//FLAPS UP (MFD/HUD Interaction Mode) (MFD/HUD Customize Mode)
+		0,
+			//Flaps MVR (Flight mode) and Paddle
+		Movement_Strafe_Forward,
+			//Flaps MVR (Flight mode)
+		Movement_Strafe_Up,
+			//Flaps DN (Camera Director Mode) and Paddle
+		0,
+			//Flaps DN (Camera Director Mode)
+		0);
+		// DOWN
+		MapKeyIOUMD(&Throttle, CSD, 
+			//FLAPS UP (MFD/HUD Interaction Mode) (MFD/HUD Customize Mode) and Paddle
+		0,
+			//FLAPS UP (MFD/HUD Interaction Mode) (MFD/HUD Customize Mode)
+		0,
+			//Flaps MVR (Flight mode) and Paddle
+		Movement_Strafe_Backward,
+			//Flaps MVR (Flight mode)
+		Movement_Strafe_Down,
+			//Flaps DN (Camera Director Mode) and Paddle
+		0,
+			//Flaps DN (Camera Director Mode)
+		0);
+
+	//2.2 Throttle Thumb button (MS) ****
+
+		// Throttle Thumb (MS) changes HUD Tab and controls Top/Bottom Shields as well as Voice Commms PPT and scoreboard/mobiglass, scan mode
+				// UP: HUD Screen Left			Transfer Shields Top
+			MapKeyIO(&Throttle, MSU, PULSE + HUD_Screen_Left , EXEC("DoShields(Shields_Transfer_Top);"));
+			//MapKeyRIO(&Throttle, MSU, 0, EXEC("ActKey(Shields_Transfer_Top); DeferCall(HUD_Response_Timer, &OnHUDCallback, 0);"));
+				// DOWN: HUD Screen Right 		Transfer Shields Bottom
+			MapKeyIO(&Throttle, MSD, PULSE + HUD_Screen_Right, EXEC("DoShields(Shields_Transfer_Bottom);"));
+			//MapKeyRIO(&Throttle, MSD, 0, EXEC("ActKey(Shields_Transfer_Bottom); DeferCall(HUD_Response_Timer, &OnHUDCallback, 0);"));
+				// PRESS: HUD Cancel		Reset Power
+			MapKeyIO(&Throttle, MSP, PULSE + HUD_Cancel, PULSE + Systems_Power_Reset);
+				// LEFT: Push-To-Talk (no paddle), HotMic toggle (with Paddle) - this will turn on SCRLOCK LED on Keyboard when you are talking
+			MapKeyIO(&Throttle, MSL, KEYON+DOWN+Others_TeamSpeak_PTT, Others_TeamSpeak_PTT);
+			MapKeyRIO(&Throttle, MSL,  0, PULSE + Others_TeamSpeak_PTT);
+				// RIGHT: Toggle Mobiglass (no paddle), Toggle New AR mode (with Paddle)
+			MapKeyIO(&Throttle, MSR, View_ARMode, View_Mobiglass);
+			// MapKeyRIO(&Throttle, MSR, 0, 0);
+				// PRESS: Scan Mode (press) Scan Active Ping (hold)
+			MapKeyIO(&Throttle, MSP, 0, Targeting_Scan_Mode);
+		
+	//2.3 RDR Free ***
+			// RDRDIS
+			// RDRNRM
+			MapKey(&Throttle, RDRDIS, 0);
+			MapKey(&Throttle, RDRNRM, 0);
+		
+	//2.4 EACON
+			// FLAPS UP: Power to Weapons Toggle, FLAPS MV: Power to Shields Toggle, FLAPS DN: Power to Avionics Toggle
+				// EAC Switch Toggles System On/Off depending on the position of the FLAPs switch
+			// **** below needs to change
+			MapKeyUMD(&Throttle, EACON, PULSE + Systems_Toggle_Weapons, PULSE + Systems_Toggle_Shields, PULSE + Systems_Toggle_Engines);
+			MapKeyUMD(&Throttle, EACOFF, PULSE + Systems_Toggle_Weapons, PULSE + Systems_Toggle_Shields, PULSE + Systems_Toggle_Engines);
+			
+	//2.6 Travel Mode Selection (LASTE Switch)
+			// Laste Switchs affects AUTOPILOT ENGAGE (AE) and LANDING GEAR WARNING (LGW) buttons on the throttle. 
+				// LASTE PATH (up): LGW: toggles Quantum Drive HUD (depricated 3.0), AE: Engage Quantum Drive
+			MapKey(&Throttle, APPAT, CHAIN(EXEC("MapKey(&Throttle,APENG,PULSE + Flight_QD_Engage);"),EXEC("MapKey(&Throttle,LDGH,PULSE + Flight_QD_HUD);")));
+				// LASTE ALT/HDG (mid): LGW: toggles Matches Target Velocity, AE: toggles Decouple mode. Press and HOLD LGW to Eject!
+			MapKeyR(&Throttle, APPAT, CHAIN(EXEC("MapKey(&Throttle,APENG,PULSE + Systems_IFCS_Decouple);"),EXEC("MapKey(&Throttle,LDGH,TEMPO(PULSE + Flight_Match_Target_Velocity, PULSE + Flight_Eject, Eject_Hold_Timer));")));
+				// LASTE ALT (down): LGW: toggles Landing Mode (extract gear, call ATC for landing), AE: Toggles Flight Ready mode(autostart). Press and HOLD LGW to enable Auto-Land mode.
+			MapKey(&Throttle, APALT, CHAIN(EXEC("MapKey(&Throttle,APENG,PULSE + Flight_Ready_Mode);"),EXEC("MapKey(&Throttle,LDGH,TEMPO(PULSE + Flight_Landing_Mode, Flight_Auto_Land, Auto_Land_Hold_Timer));")));
+				// LASTE ALT/HDG (mid): LGW: toggles Matches Target Velocity, AE: toggles Decouple mode. Press and HOLD LGW to Eject!
+			MapKeyR(&Throttle, APALT, CHAIN(EXEC("MapKey(&Throttle,APENG,PULSE + Systems_IFCS_Decouple);"),EXEC("MapKey(&Throttle,LDGH,TEMPO(PULSE + Flight_Match_Target_Velocity, PULSE + Flight_Eject, Eject_Hold_Timer));")));
+		
+	// 2.7 Views (Pinky, S3, LTB)
+			// Pinky switch controls cameras - Forward-Middle-Forward will cycle thru available cameras. Backwards will keep camera button pressed so you can change the camera angle by moving the mouse
+			MapKey(&Throttle, PSF, PULSE + View_Switch);
+			// we don;t want release of this switch to trigger another view, or do we?
+			MapKeyR(&Throttle, PSF, PULSE + View_Switch);
+			MapKey(&Throttle, PSB, PULSE + View_Switch);
+			MapKeyR(&Throttle, PSB, PULSE + View_Switch);
+			
+	//2.8 LTB Center EDTracker/TrackIR
+			MapKeyIO(&Throttle, LTB, View_TrackIR_Precision, View_Center_HeadTracking);
+
+	//2.9 SC Head Look Toggle, Mouse Click?
+			// SC used as Mouse Click with paddle, else toggles Mouse Mode (whatver its called now)
+			MapKeyIO(&Throttle, SC, Flight_Mouse_Move_Mode, Flight_Mouse_Mode_Toggle); // trying new 2.6 definitions of mouse mode used to be look ahead?
+			
+	//2.10 Boat Switch
+			// Apply custom curves for Sensitivity, Normal or Agility
+				// Back is Sensitivity mode
+			MapKey(&Throttle, BSB, EXEC ("PREMode();"));
+				// Middle is Normal mode
+			MapKeyR(&Throttle, BSB, EXEC ("SCMMode();"));
+				// Forward is Agility mode
+			MapKey(&Throttle, BSF, EXEC ("CRUMode();"));
+				// Middle is Normal mode
+			MapKeyR(&Throttle, BSF, EXEC ("SCMMode();"));
+		
+	//2.11 China Hat controls IFCS Safeties
+			// Forward: empty / with paddle: ESP Toggle
+			// Backward: Gsafe Mode Toggle / with paddle: CommStab mode toggle
+			MapKeyIO (&Throttle, CHF, PULSE + Systems_IFCS_ESP_Toggle, 0);
+			MapKeyIO (&Throttle, CHB, PULSE + Systems_IFCS_COMSTAB, PULSE + Systems_IFCS_GSafe);
+					
+	//2.12 EFL OVER/NORM free ****
+			MapKey(&Throttle, EFLOVER , 0);
+			MapKey(&Throttle, EFLNORM , 0);
+		// EFR OVER/NORM also empty **** 
+			MapKey(&Throttle, EFROVER , 0);
+			MapKey(&Throttle, EFRNORM , 0);
+			
+	//2.13 Boost and SpeedBrakes (SPD, Throttle)
+			// SPDB Key
+			MapKeyIO(&Throttle, SPDB, 
+			//With Paddle (Break)
+			Movement_Break,
+			//Without Paddle (Boost)
+			Movement_Boost);
+
+			// SPDF Key
+			MapKeyIO(&Throttle, SPDF, 
+			//With Paddle (Emergency Break)
+			CHAIN(Movement_Boost, Movement_Break),
+			//Without Paddle (AfterBurner)
+			Movement_Afterburner);
+					
+	//2.14 ENG OPER (IGN used, MOTOR Free)
+			// Lights Toggle
+			MapKey(&Throttle, EORIGN, SEQ(CHAIN(PULSE + Systems_Toggle_Lights , PULSE + LED(&Throttle, LED_INTENSITY, 0)) , CHAIN(PULSE + Systems_Toggle_Lights , PULSE + LED(&Throttle, LED_INTENSITY, LED_Level))));
+			// Radar Zoom Toggle ','
+			MapKey(&Throttle, EOLIGN, PULSE+Systems_Radar_Range);
+			
+	//2.15 APU on/off toggles suicide mode (self destruct)
+			MapKey(&Throttle, APUON, EXEC("ActKey(KEYON + Flight_Self_Destruct);DeferCall(2000, &ActKey, Flight_Self_Destruct);"));
+			MapKey(&Throttle, APUOFF, EXEC("ActKey(KEYON + Flight_Self_Destruct);DeferCall(2000, &ActKey, Flight_Self_Destruct);"));
+			
+	//2.16 LEDs
+			// Power On
+				// initialize LED lighting
+			ActKey(PULSE+LED(&Throttle, LED_INTENSITY, LED_Level));
+			ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED1)); //set LED 1 ON, as Weapon Group 1 default
+			ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED2)); //set LED 2 OFF
+			ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED3)); //set LED 3 OFF
+			ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED4)); //set LED 4 OFF
+			ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED5)); //set LED 5 OFF
+				// LED 3-5 help to identify deadzone for Left Throttle (all LEDs will be OFF when Left Throttle is on IDLE)
+			KeyAxis(&Throttle, THR_LEFT, 0, AXMAP2(7,
+				//1
+				CHAIN
+				(
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED3),
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED4),
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED5)
+				),
+				//2
+				CHAIN
+				(
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED3),
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED4),
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED5)
+				),
+				//3
+				CHAIN
+				(
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED3),
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED4),
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED5)
+				),
+				//4
+				CHAIN
+				(
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED3),
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED4),
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED5)
+				),
+				//5
+				CHAIN
+				(
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED3),
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED4),
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED5)
+				),
+				//6
+				CHAIN
+				(
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED3),
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED4),
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED5)
+				),
+				//7
+				CHAIN
+				(
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED3),
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED4),
+					PULSE+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED5)
+				)
+			));
+		
+		
+		
+// 3.0 Joystick Mappings
+
+	//3.1 Hat 4 (Thumb switch)
+			// H4 Up
+			MapKeyIOUMD(&Joystick, H4U, 
+			//FLAPS UP (MFD/HUD Interaction Mode) and Paddle
+			0,
+			//FLAPS UP (MFD/HUD Interaction Mode) 
+			PULSE + HUD_Up,
+			//Flaps MVR (Flight mode) and Paddle
+			Shields_Transfer_Forward,
+			//Flaps MVR (Flight mode)
+			PULSE + View_Zoom_In,
+			//Flaps DN (Camera Director Mode) and Paddle
+			0,
+			//Flaps DN (Camera Director Mode)
+			Camera_Target_Offset_Up);
+
+			// H4 Left
+			MapKeyIOUMD(&Joystick, H4L, 
+			//FLAPS UP (MFD/HUD Interaction Mode) and Paddle
+			0,
+			//Flaps UP
+			PULSE + HUD_Left,
+			//Flaps MVR (Flight mode) and Paddle
+			EXEC("CMChaff();"),
+			//Flaps MVR (Flight mode)
+			Weapons_Countermeasure_Change,
+			//Flaps DN (Camera Director Mode) and Paddle
+			0,
+			//Flaps DN (Camera Director Mode)
+			Camera_Target_Offset_Left);
+
+			// H4 Right
+			MapKeyIOUMD(&Joystick, H4R, 
+			//FLAPS UP (MFD/HUD Interaction Mode) and Paddle
+			0,
+			//FLAPS UP (MFD/HUD Interaction Mode) 
+			PULSE + HUD_Right,
+			//Flaps MVR (Flight mode) and Paddle
+			EXEC("CMFlare();"),
+			//Flaps MVR (Flight mode)
+			Weapons_Countermeasure_Launch,
+			//Flaps DN (Camera Director Mode) and Paddle
+			0,
+			//Flaps DN (Camera Director Mode)
+			Camera_Target_Offset_Right);
+
+			// H4 Down
+			MapKeyIOUMD(&Joystick, H4D, 
+			//FLAPS UP (MFD/HUD Interaction Mode) and Paddle
+			0,
+			//FLAPS UP (MFD/HUD Interaction Mode) 
+			PULSE + HUD_Down,
+			//Flaps MVR (Flight mode) and Paddle
+			//Shields_Transfer_Backward,
+			//Flare Flare Flare 
+			//Flaps MVR (Flight mode)
+			PULSE + View_Zoom_Out,
+			//Flaps DN (Camera Director Mode) and Paddle
+			0,
+			//Flaps DN (Camera Director Mode)
+			Camera_Target_Offset_Down);
+
+			// H4 Press
+			MapKeyIOUMD(&Joystick, H4P, 
+			//FLAPS UP (MFD/HUD Interaction Mode) and Paddle
+			PULSE + HUD_Select,
+			//FLAPS UP (MFD/HUD Interaction Mode) 
+			PULSE + HUD_Accept,
+			//Flaps MVR (Flight mode) and Paddle
+			PULSE + Shields_Reset,
+			//Flaps MVR (Flight mode)
+			PULSE + Systems_Power_Reset,
+			//Flaps DN (Camera Director Mode) and Paddle
+			0,
+			//Flaps DN (Camera Director Mode)
+			Camera_Reset_Previous_View);
+
+	//3.2 DMS 
+			// DMS Up
+			MapKeyIOUMD(&Joystick, H3U, 
+			//FLAPS UP (MFD/HUD Interaction Mode) and Paddle
+			0,
+			//FLAPS UP (MFD/HUD Interaction Mode) 
+			PULSE + HUD_MFD_Up,
+			//Flaps MVR (Flight mode) and Paddle
+			Shields_Transfer_Top,
+			//Flaps MVR (Flight mode)
+			Shields_Transfer_Forward,
+			//Flaps DN (Camera Director Mode) and Paddle
+			Camera_Zoom_In,
+			//Flaps DN (Camera Director Mode)
+			Camera_Strafe_Up);
+
+			// DMS Left
+			MapKeyIOUMD(&Joystick, H3L, 
+			//FLAPS UP (MFD/HUD Interaction Mode) and Paddle
+			PULSE + HUD_Screen_Left,
+			//FLAPS UP (MFD/HUD Interaction Mode)
+			PULSE + HUD_MFD_Left,
+			//Flaps MVR (Flight mode) and Paddle
+			Systems_Cooler_Decrease_Rate,
+			//Flaps MVR (Flight mode)
+			Shields_Transfer_Left,
+			//Flaps DN (Camera Director Mode) and Paddle
+			Camera_Background_Blur_Decrease,
+			//Flaps DN (Camera Director Mode)
+			Camera_DoF_Decrease);
+
+			// DMS Right
+			MapKeyIOUMD(&Joystick, H3R, 
+			//FLAPS UP (MFD/HUD Interaction Mode) and Paddle
+			PULSE + HUD_Screen_Right,
+			//FLAPS UP (MFD/HUD Interaction Mode)
+			PULSE + HUD_MFD_Right,
+			//Flaps MVR (Flight mode) and Paddle
+			Systems_Cooler_Increase_Rate,
+			//Flaps MVR (Flight mode)
+			Shields_Transfer_Right,
+			//Flaps DN (Camera Director Mode) and Paddle
+			Camera_Background_Blur_Increase,
+			//Flaps DN (Camera Director Mode)
+			Camera_DoF_Increase);
+
+			// DMS Down
+			MapKeyIOUMD(&Joystick, H3D,
+			//FLAPS UP (MFD/HUD Interaction Mode) and Paddle
+			0,
+			//FLAPS UP (MFD/HUD Interaction Mode) 
+			PULSE + HUD_MFD_Down,
+			//Flaps MVR (Flight mode) and Paddle
+			Shields_Transfer_Bottom,
+			//Flaps MVR (Flight mode)
+			Shields_Transfer_Backward,
+			//Flaps DN (Camera Director Mode) and Paddle
+			Camera_Zoom_Out,
+			//Flaps DN (Camera Director Mode)
+			Camera_Strafe_Down);
+			
+	// 3.3 TMS
+		// Direction (when Hold) / With Paddle (when Hold)
+			// Targeting controlled by TMS
+				// UP Target Reticle (Pin Target) / Cycle Pinned
+			MapKeyIO(&Joystick, H2U, PULSE + Targeting_Cycle_Pinned_Target, TEMPO(PULSE + Targeting_Focus_Reticle	, PULSE + Targeting_Pin_Target, Targeting_Hold_Timer));
+				// DOWN Target Nearest Hostile (Pin Target) / Cycle Pinned Back
+			MapKeyIO(&Joystick, H2D, PULSE + Targeting_Cycle_Back_Pinned_Target, TEMPO(PULSE + Targeting_Nearest_Hostile	, PULSE + Targeting_Pin_Target, Targeting_Hold_Timer));
+				// RIGHT Cycle Hostile / Cycle Friendly
+			MapKeyIO(&Joystick, H2R, PULSE + Targeting_Cycle_Friendly	, PULSE + Targeting_Cycle_Hostile);
+				// LEFT Cycle Hostile Back / Cycle Friendly Back
+			MapKeyIO(&Joystick, H2L, PULSE + Targeting_Cycle_Back_Friendly	, PULSE + Targeting_Cycle_Back_Hostile);
+			
+	//3.4 Triger Button (TG1, TG2, S2, Hat 1)
+			// TG1 Fires Weapon Group 1
+			MapKey(&Joystick, TG1, CHAIN(Weapons_Fire_G1, Systems_IFCS_ESP));	// Fire weapon group '1' or '2'
+			// TG2 fires Weapon Groups 1+2+3+4
+			MapKey(&Joystick, TG2, CHAIN(Weapons_Fire_G1, Weapons_Fire_G2, Weapons_Fire_G3, Weapons_Fire_G4));	// Fire weapon group '1' through '4'
+			
+	//3.5 S1 cylces between Weapon Groups 1 - 4 for TG1, along with LEDs 1 & 2
+				// LEDs 1 & 2 will help you identify the selected weapon group
+					// LED 1 ON, LED 2 OFF: Weapon Group 1
+					// LED 1 OFF, LED 2 ON: Weapon Group 2
+					// LED 1 ON, LED 2 ON: Weapon Group 3
+					// LED 1 OFF, LED 2 OFF: Weapon Group 4
+			MapKey(&Joystick, S1, SEQ(CHAIN(EXEC("ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED1+LED2));"),EXEC("MapKey(&Joystick, TG1, CHAIN(Weapons_Fire_G2, Systems_IFCS_ESP));")),CHAIN(EXEC("ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED1+LED2));"),EXEC("MapKey(&Joystick, TG1, CHAIN(Weapons_Fire_G3, Systems_IFCS_ESP));")),CHAIN(EXEC("ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED1-LED2));"),EXEC("MapKey(&Joystick, TG1, CHAIN(Weapons_Fire_G4, Systems_IFCS_ESP));")),CHAIN(EXEC("ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED1-LED2));"),EXEC("MapKey(&Joystick, TG1, CHAIN(Weapons_Fire_G1, Systems_IFCS_ESP));"))));
+			
+	//3.6 S2 locks Missiles, hold to fire
+			// S2 with paddle Mouse 1 click (for AR system) instead of decouple Systems_IFCS_Decouple
+			MapKeyIO(&Joystick, S2, PULSE+MOUSE_LEFT, Weapons_Missile);
+			
+	//3.7 Hat 1	
+			// Toggle Gimble Lock
+			MapKey(&Joystick, H1U, Weapons_Gimble_Lock);
+			// Toggle Reticle mode
+			MapKey(&Joystick, H1D, Weapons_Reticle_Mode);
+			//H1R will transfer power to Weapons (pew pew)
+			MapKey(&Joystick, H1R, Systems_Power_Weapons);
+			// H1L will transfer power to Shields and Avionics (GTFO mode)
+			MapKey(&Joystick, H1L, CHAIN(Systems_Power_Shields, Systems_Power_Engines));
+			
+	//3.8 S3
+			// S3 
+			MapKeyIOUMD(&Joystick, S3,
+			//FLAPS UP (MFD/HUD Interaction Mode) and Paddle
+			0,
+			//FLAPS UP (MFD/HUD Interaction Mode) 
+			PULSE + HUD_Cancel,
+			//Flaps MVR (Flight mode) and Paddle
+			0,
+			//Flaps MVR (Flight mode)
+			View_Look_Behind,
+			//Flaps DN (Camera Director Mode) and Paddle
+			0,
+			//Flaps DN (Camera Director Mode)
+			Camera_Toggle_Orbit_Cam);
+			
+	//3.9 Paddle (S4 used as IO switch for all other buttons)
+	//end of Initialization
+	}	
+		
+// End of File
+// qp
+// .
