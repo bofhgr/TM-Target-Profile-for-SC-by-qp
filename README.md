@@ -1,10 +1,10 @@
 **************************************************************************
 	STAR CITIZEN TARGET Profile
 		- Thrustmaster Warthog HOTAS
-    - Thrustmaster T1600 Dual stick
-    - Thrustmaster Ruder Pedals
+		- Thrustmaster T1600 Dual stick
+		- Thrustmaster Ruder Pedals
 		
-		Written by qp
+	Written by qp
  		https://robertsspaceindustries.com/citizens/q-p
 
 **************************************************************************
