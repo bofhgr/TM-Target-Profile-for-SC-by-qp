@@ -62,8 +62,8 @@
 			// SetSCurve(&Device, axis name, left_deadzone, center_deadzone, right_deadzone, curve, scale)
 			// SCM mode curves improves control near the center for better aiming and accelerated motions in edges for faster turns
 			// Combat Mode gives Throttle control on Right stick (curve for fine AB control)
-			MapAxis(&Throttle, THR_RIGHT, DX_THROTTLE_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
-			//MapAxis(&Throttle, THR_FC, DX_Z_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
+			MapAxis(&Throttle, THR_RIGHT, DX_THROTTLE_AXIS, AXIS_NORMAL, MAP_ABSOLUTE); //0-100 on right throttle
+			//MapAxis(&Throttle, THR_FC, DX_SLIDER_AXIS, AXIS_REVERSED, MAP_ABSOLUTE); //fw/bw strafe on slider
 			SetSCurve(&Joystick, JOYX, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
 			SetSCurve(&Joystick, JOYY, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
 			//SetSCurve(&Throttle, THR_FC, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
@@ -71,7 +71,19 @@
 			SetSCurve(&Throttle, THR_RIGHT, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
 			SetSCurve(&Throttle, SCX, 0, 50, 0, 0, 0);
 			SetSCurve(&Throttle, SCY, 0, 50, 0, 0, 0);
+			SetSCurve(&TFRPRudder, TRUDDER, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+			SetSCurve(&TFRPRudder, TRPRIGHT, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+			SetSCurve(&TFRPRudder, TRPLEFT, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+			SetSCurve(&right, JOYX, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+			SetSCurve(&right, JOYY, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+			SetSCurve(&right, RUDDER, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+			SetSCurve(&right, THR, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+			SetSCurve(&left, JOYX, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+			SetSCurve(&left, JOYY, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+			SetSCurve(&left, RUDDER, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+			SetSCurve(&left, THR, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
 			ActKey(KEYON + PULSE + Movement_Throttle_Zero);
+			D ();
 			ActKey(KEYON + PULSE + Movement_Throttle_Zero);
 			// ActKey (KEYON + PULSE + Flight_Mode_Switch);
 			Flight_Mode=1;
@@ -83,8 +95,8 @@
 			// SetSCurve(&Device, axis name, left_deadzone, center_deadzone, right_deadzone, curve, scale)
 			// PRE mode curves increase Sensitivity and limits thruster output to 50% of max for smooth landings
 			// Pre mode gives longitudinal strafe (f/b) controls on Right Stick
-			MapAxis(&Throttle, THR_RIGHT, DX_Z_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
-			//MapAxis(&Throttle, THR_FC, DX_THROTTLE_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+			MapAxis(&Throttle, THR_RIGHT, DX_YROT_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+			//MapAxis(&Throttle, THR_FC, DX_THROTTLE_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
 			SetSCurve(&Joystick, JOYX, 0, 0, 0, PREMode_Curve, PREMode_Scale);
 			SetSCurve(&Joystick, JOYY, 0, 0, 0, PREMode_Curve, PREMode_Scale);
 			//SetSCurve(&Throttle, THR_FC, 0, 0, 0, PREMode_Curve, PREMode_Scale);
@@ -92,7 +104,19 @@
 			SetSCurve(&Throttle, THR_RIGHT, 0, 2*Right_Throttle_Deadzone, 0, PREMode_Curve, PREMode_Scale);
 			SetSCurve(&Throttle, SCX, 0, 50, 0, 0, 0);
 			SetSCurve(&Throttle, SCY, 0, 50, 0, 0, 0);
+			SetSCurve(&TFRPRudder, TRUDDER, 0, 0, 0, PREMode_Curve, PREMode_Scale);
+			SetSCurve(&TFRPRudder, TRPRIGHT, 20, 0, 0, PREMode_Curve, PREMode_Scale);
+			SetSCurve(&TFRPRudder, TRPLEFT, 20, 0, 0, PREMode_Curve, PREMode_Scale);
+			SetSCurve(&right, JOYX, 0, 0, 0, PREMode_Curve, PREMode_Scale);
+			SetSCurve(&right, JOYY, 0, 0, 0, PREMode_Curve, PREMode_Scale);
+			SetSCurve(&right, RUDDER, 0, 0, 0, PREMode_Curve, PREMode_Scale);
+			SetSCurve(&right, THR, 0, 0, 0, PREMode_Curve, PREMode_Scale);
+			SetSCurve(&left, JOYX, 0, 0, 0, PREMode_Curve, PREMode_Scale);
+			SetSCurve(&left, JOYY, 0, 0, 0, PREMode_Curve, PREMode_Scale);
+			SetSCurve(&left, RUDDER, 0, 0, 0, PREMode_Curve, PREMode_Scale);
+			SetSCurve(&left, THR, 0, 0, 0, PREMode_Curve, PREMode_Scale);
 			ActKey(KEYON + PULSE + Movement_Throttle_Zero);
+			D ();			
 			ActKey(KEYON + PULSE + Movement_Throttle_Zero);
 			// ActKey (KEYON + PULSE + Flight_Mode_Switch);
 			Flight_Mode=2;
@@ -104,8 +128,8 @@
 			// SetSCurve(&Device, axis name, left_deadzone, center_deadzone, right_deadzone, curve, scale)
 			// CRU mode curves increase Agility for fastest turns and gives 100% thruster output at 2/3 of motion
 			// not sure of above, used for close combat dogfights, gives strafe not throttle
-			MapAxis(&Throttle, THR_RIGHT, DX_Z_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
-			//MapAxis(&Throttle, THR_FC, DX_THROTTLE_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+			MapAxis(&Throttle, THR_RIGHT, DX_YROT_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+			//MapAxis(&Throttle, THR_FC, DX_THROTTLE_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
 			SetSCurve(&Joystick, JOYX, 0, 0, 0, CRUMode_Curve, CRUMode_Scale);
 			SetSCurve(&Joystick, JOYY, 0, 0, 0, CRUMode_Curve, CRUMode_Scale);
 			//SetSCurve(&Throttle, THR_FC, 0, 0, 0, CRUMode_Curve, CRUMode_Scale);
@@ -113,7 +137,19 @@
 			SetSCurve(&Throttle, THR_RIGHT, 0, Right_Throttle_Deadzone/2, 0, CRUMode_Curve, CRUMode_Scale);
 			SetSCurve(&Throttle, SCX, 0, 50, 0, 0, 0);
 			SetSCurve(&Throttle, SCY, 0, 50, 0, 0, 0);
+			SetSCurve(&TFRPRudder, TRUDDER, 0, 0, 0, CRUMode_Curve, CRUMode_Scale);
+			SetSCurve(&TFRPRudder, TRPRIGHT, 0, 0, 0, CRUMode_Curve, CRUMode_Scale);
+			SetSCurve(&TFRPRudder, TRPLEFT, 0, 0, 0, CRUMode_Curve, CRUMode_Scale);
+			SetSCurve(&right, JOYX, 0, 0, 0, CRUMode_Curve, CRUMode_Scale);
+			SetSCurve(&right, JOYY, 0, 0, 0, CRUMode_Curve, CRUMode_Scale);
+			SetSCurve(&right, RUDDER, 0, 0, 0, CRUMode_Curve, CRUMode_Scale);
+			SetSCurve(&right, THR, 0, 0, 0, CRUMode_Curve, CRUMode_Scale);
+			SetSCurve(&left, JOYX, 0, 0, 0, CRUMode_Curve, CRUMode_Scale);
+			SetSCurve(&left, JOYY, 0, 0, 0, CRUMode_Curve, CRUMode_Scale);
+			SetSCurve(&left, RUDDER, 0, 0, 0, CRUMode_Curve, CRUMode_Scale);
+			SetSCurve(&left, THR, 0, 0, 0, CRUMode_Curve, CRUMode_Scale);
 			ActKey(KEYON + PULSE + Movement_Throttle_Zero);
+			D ();
 			ActKey(KEYON + PULSE + Movement_Throttle_Zero);
 			// ActKey (KEYON + PULSE + Flight_Mode_Switch);
 			Flight_Mode=3;
@@ -202,14 +238,6 @@
 // 10.0 Firing Mode TG1 TG2
 
 
-// 9.0 EventHandle
-	int EventHandle(int type, alias o, int x)
-	{
-		DefaultMapping(&o, x);
-	}
-
-
-	
 // End of File
 // qp
 // .
