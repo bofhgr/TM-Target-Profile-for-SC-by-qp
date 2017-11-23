@@ -1,15 +1,15 @@
 //**************************************************************************
 //	STAR CITIZEN TARGET Profile
 //		- For the Thrustmaster Warthog HOTAS
-//		
+//		instructions like https://docs.google.com/document/d/1uUQNTgCOgs8QFDEQlrigR8E44mgw_1Cl7XvlNfcjB14/edit
 //		Written by qp
 // 		https://robertsspaceindustries.com/citizens/q-p
-//
+//http://www.versecast.org/forums/m/9857145/viewthread/24229000-fixing-t16000m-target-script-editor-windows-10-81-bug/post/last
 //**************************************************************************
 
 // Version Info
 // Updated for Star Citizen 3.0 PTU
-// Last Update: Oct 20 2017
+// Last Update: Nov 23rd 2017
 
 //system("spawn -w\"software main folder" \ "exe shortcut"");
 	
@@ -17,13 +17,14 @@
 //DX_X_Axis: JoyX | Directional Rotational Axis - Yaw
 //DX_Y_Axis: JoyY | Lateral Rotational Axis - Pitch
 //DX_Throttle Axis: THR_Right | 0-100 throttle value 
-//DX_Slider_Axis: THR_FC | View Zoom (3.0) 
+//DX_SLIDER_AXIS: THR_FC | Used for secondary axis for throttle to do the fw/backward thingz
 //DX_ZRot_Axis: THR_Left | Vertical Translational Axis
-//DX_Z_Axis: THR_Right | Longitudinal Translational Axis
-//DX_XRot_Axis: SCx | Controls Targeting Aim/Freelook option
-//DX_YRot_Axis: SCy | Controls Targeting Aim/Freelook option
-// peddals R/L: - | Lateral Translational AXIS_NORMAL
-// peddals Roll: - | Longitudinal Rotational Axis - Roll
+//DX_Z_Axis: TRUDDER | Roll Axis
+//DX_XRot_Axis: TRPRight/SCx | Lateral Strafe Right
+//DX_YRot_Axis: TRPLeft/SCy | Lateral Strafe Left
+//re do these definitions
+
+
 
 // ToDo List
 // SC button:?? RIGGHT SHIFT makes you look straight ahead? for viewing use aim axis not view axis in 2.6?
@@ -49,60 +50,142 @@
 	// create a flag to track Ship and FPS lights
 	char Lights_Ship;
 	char Lights_FPS;
+	
+// 0.3 TM16000FCS L/R Setup
+	alias left;
+	alias right;
 
 // 1.0 Main Initialization
 	int main()
 	{	
-		// Configure for ThrustMaster Warthog HOTAS
+		// We are Excluding what devices are not supported
 		Configure(&HCougar, MODE_EXCLUDED);
-		Configure(&T16000, MODE_EXCLUDED);
+		//Configure(&T16000, MODE_EXCLUDED);
+		//Configure(&T16000L, MODE_EXCLUDED);
+		//Configure(&Joystick, MODE_EXCLUDED);
+		//Configure(&Throttle, MODE_EXCLUDED);
 		Configure(&LMFD, MODE_EXCLUDED);
 		Configure(&RMFD, MODE_EXCLUDED);
 		Configure(&TWCSThrottle, MODE_EXCLUDED);
-		Configure(&TFRPRudder, MODE_EXCLUDED);
+		//Rudder Pedals are configured as Filtered device as we will be combining their toe brake axis
+		// Configure(&TFRPRudder, MODE_FILTERED);
 		// Set repeat delay for keyboard commands
 		SetKBRate(25, 60);
 		// declare the event handler, return on error
 		if(Init(&EventHandle)) return 1; 
 	
-	// 1.1 Axis Assignment - Rotation Axis
-		// JoyX - Yaw
+// 1.1 Axis Assignment - Rotation Axis
+//DirectX gives us 8 total Axis to play with
+//So we'll use 6 degrees of freedom mapped to first 6 axis and also Throttle and Slider axis
+// https://en.wikipedia.org/wiki/Six_degrees_of_freedom
+// https://en.wikipedia.org/wiki/Aircraft_principal_axes
+	// X - Turn Left/Right (Yaw)
+	// Y - Rotate Forwards/Backwards (Pitch)
+	// Z - Rotate Left/Right (Roll)
+	// XROT - Move Left/Right (Sway)
+	// YROT - Move Forwards/Backwards (Surge)
+	// ZROT - Move Up/Down (Heave)
+	// SLIDER - Controls Zoom in-out
+	// THROTTLE - Controls Throttle 0-100
+//need function to swap Yaw with Roll
+
+		//Initialize Dual Sticks alias for easier reference
+		&right = &T16000;
+		&left = &T16000L;
+
+// see int eventhandler for this. we must also insure that curves are able to be applied to all devices
+// and make sure to highlight that we'll only have 1 virtual device to use with SC and that should make it simpler to use
+
+	// X Axis - Yaw
+		//Warthog Stick - Stick Left/Right
 		MapAxis(&Joystick, JOYX, DX_X_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
-		// JoyY - Pitch
+		//TM16000 Right - Stick Left/Right
+		MapAxis(&right, JOYX, DX_X_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+	// Y Axis - Pitch	
+		//Warthog Stick - Stick Forwards/Backwards
 		MapAxis(&Joystick, JOYY, DX_Y_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
-		// Roll Axis on Pedals
-		//not implemented until I get the pedals :D
-	// 1.2 Axis Assignment - Translation Axis
-		// THR_Right - Right Throttle - FW/BW - Longitudinal Motion
-		MapAxis(&Throttle, THR_RIGHT, DX_THROTTLE_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
-		// THR_Left - Left Throttle - UP/DN - Vertical Motion
+		//TM16000 Right - Stick Forwards/Backwards
+		MapAxis(&right, JOYY, DX_Y_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+	// Z Axis - Roll
+		//TRUDDER - Pedals R/L Twist
+		MapAxis(&TFRPRudder, TRUDDER, DX_Z_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+		//TM16000 Right - Rudder Twist
+		MapAxis(&right, RUDDER, DX_Z_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+
+// 1.2 Axis Assignment - Translation Axis
+	// XROT Axis - Strafe Left / Right
+		//TRUDDER - Left/Right Pedals
+			//XROT axis is not assigned here, instead assigned on the EventHandler section. This is done so we can assign custom curves to the combined axis.
+		MapAxis(&TFRPRudder, TRPRIGHT, 0, AXIS_NORMAL, MAP_ABSOLUTE);
+		MapAxis(&TFRPRudder, TRPLEFT, 0, AXIS_NORMAL, MAP_ABSOLUTE);
+		//TM16000 Left - Stick Left/Right
+		MapAxis(&left, JOYX, DX_XROT_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+	// YROT Axis - Strafe Forwards / Backwards
+		//Warthog Throttle - Right Engine Throttle
+			//Not mapped initially as we're mapping this when selected with boat switch
+		//TM16000 Left - Stick Forwards/Backwards
+		MapAxis(&left, JOYY, DX_YROT_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
+	// ZROT Axis - Strafe Up / Down
+		//Warthog Throttle - Left Engine Throttle
 		MapAxis(&Throttle, THR_LEFT, DX_ZROT_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
-		// THR_FC - Slider - To be used for Zoom In/Out TrackIR
+		//TM16000 Left - Rudder Twist
+		MapAxis(&left, RUDDER, DX_ZROT_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+
+// 1.3 Axis Assignement - Throttle Axis and Slider Axis
+	// THROTTLE Axis - Throttle 0-100
+		//Warthog Throttle - Right Engine Throttle
+		MapAxis(&Throttle, THR_RIGHT, DX_THROTTLE_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+		//TM16000 Left - Throttle
+		MapAxis(&left, THR, DX_THROTTLE_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+	// SLIDER Axis - Dynamic Zoom In/Out
+		//Warthog Throttle
 		MapAxis(&Throttle, THR_FC, DX_SLIDER_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
+		//TM16000 Right - Throttle
+		MapAxis(&right, THR, DX_SLIDER_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
+		
+		
+	////Rudder
+	//	//Strafe Right
+	//	MapAxis(&TFRPRudder, TRPRIGHT, DX_XROT_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
+	//	//Strafe Left
+	//	MapAxis(&TFRPRudder, TRPLEFT, DX_YROT_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
 
 	// SC X, Y currently tied to aiming mode, will move aim reticle and help auto-center after couple seconds idle
-		MapAxis(&Throttle, SCX, DX_XROT_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
-		MapAxis(&Throttle, SCY, DX_YROT_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
+		//MapAxis(&Throttle, SCX, DX_XROT_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+		//MapAxis(&Throttle, SCY, DX_YROT_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
 	
 	// 1.3 Center Joystick Rotation
 		// Center-Mounted Stick rotation
-		RotateDXAxis(DX_X_AXIS, DX_Y_AXIS, Stick_Rotation);
+		//RotateDXAxis(DX_X_AXIS, DX_Y_AXIS, Stick_Rotation);
+		//not used in 3.0 (Center stick rotation affects all pitch/roll input controls)
 
 	// 1.4 Analog Axis Curves initialization - starting with SCM Flight mode enabled for all axis
+		//SetSCurve (&Device, axis name, left_deadzone, center_deadzone, right_deadzone, curve, scale)
+		//Also SetJCurve available for throttles and other axis tricks for later
 		SetSCurve(&Joystick, JOYX, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
 		SetSCurve(&Joystick, JOYY, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
 		SetSCurve(&Throttle, THR_LEFT, 0, Left_Throttle_Deadzone, 0, SCMMode_Curve, SCMMode_Scale);
 		SetSCurve(&Throttle, THR_RIGHT, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
-		SetSCurve(&Throttle, THR_FC, 0, 0, 0, 0, 0);
+		SetSCurve(&Throttle, THR_FC, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
 		SetSCurve(&Throttle, SCX, 0, 50, 0, 0, 0);
 		SetSCurve(&Throttle, SCY, 0, 50, 0, 0, 0);
+		SetSCurve(&TFRPRudder, TRUDDER, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+		SetSCurve(&TFRPRudder, TRPRIGHT, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+		SetSCurve(&TFRPRudder, TRPLEFT, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+		SetSCurve(&right, JOYX, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+		SetSCurve(&right, JOYY, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+		SetSCurve(&right, RUDDER, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+		SetSCurve(&right, THR, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+		SetSCurve(&left, JOYX, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+		SetSCurve(&left, JOYY, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+		SetSCurve(&left, RUDDER, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
+		SetSCurve(&left, THR, 0, 0, 0, SCMMode_Curve, SCMMode_Scale);
 	
 	// 1.5 Custom Functions Initialization 
 		//declare starting countermeasure=flare, change to 0 for chaff
 		countermeasure=1;
 		//Set enhanced IFCS Flight Mode (1=SCM, 2=PRE, 3=CRU)
 		Flight_Mode=1;
-		
 	// 1.6 Shift State (I/O) and Layers (U/M/D)
 		// IO Shift is Joystick Paddle (S4) 
 			// Paddle will be used with various keys to give you quick access to more commmands
@@ -111,6 +194,7 @@
 			// UP for when you are in Augmented Reality Mode (new in 3.0)
 			// MVR for when you are in flight, combat or otherwise
 			// DN when you are in Camera Director Mode
+		SetShiftButton(&Joystick, S4, &Throttle, FLAPU, FLAPD);
 		SetShiftButton(&Joystick, S4, &Throttle, FLAPU, FLAPD);
 	// 1.xx Shift State Quick Refference
 	// Using the Paddle (Joystick S4) will affect the following Keys:
@@ -124,7 +208,6 @@
 	// DMS should control MFD up down etc (wasd)
 	// Thumb on Joy should control the cursor/menu on the screens (arrow keys)
 	// while Flaps is Forward (UP) freelook mode should be enabled, 2.5: hold 'z'
-		
 
 // 2.0 Throttle Mappings
 	
@@ -135,9 +218,6 @@
 		// for flaps down to control cameas: http://scfocus.org/camera-controls/
 		MapKey(&Throttle, FLAPD, DOWN + View_Switch);
 		MapKeyR(&Throttle, FLAPD, UP + View_Switch);
-	
-	
-	
 	
 	// 2.2 Coolie Switch (CS)
 		// LEFT
@@ -270,7 +350,7 @@
 	//2.11 China Hat controls IFCS Safeties
 			// Forward: empty / with paddle: ESP Toggle
 			// Backward: Gsafe Mode Toggle / with paddle: CommStab mode toggle
-			MapKeyIO (&Throttle, CHF, PULSE + Systems_IFCS_ESP_Toggle, 0);
+			MapKeyIO (&Throttle, CHF, PULSE + Systems_IFCS_ESP_Toggle, DX28);
 			MapKeyIO (&Throttle, CHB, PULSE + Systems_IFCS_COMSTAB, PULSE + Systems_IFCS_GSafe);
 					
 	//2.12 EFL OVER/NORM free ****
@@ -424,7 +504,7 @@
 			//FLAPS UP (MFD/HUD Interaction Mode) 
 			PULSE + HUD_Down,
 			//Flaps MVR (Flight mode) and Paddle
-			//Shields_Transfer_Backward,
+			Shields_Transfer_Backward,
 			//Flare Flare Flare 
 			//Flaps MVR (Flight mode)
 			PULSE + View_Zoom_Out,
@@ -568,6 +648,83 @@
 	//3.9 Paddle (S4 used as IO switch for all other buttons)
 	//end of Initialization
 	}	
+
+	//EventHandle
+//Combining the 2 Rudder Pedal Axis into one for Strafe R/L in one axis instead of 2
+//the below code from http://simhq.com/forum/ubbthreads.php/topics/4274311/TFRP_Rudders_-_Combined_toe_br
+//allows to have the combined axis along with user customizable curves for the rudder and pedals
+//int EventHandle(int type, alias o, int x){
+//	
+//	//Create needed variables
+//	int TRPCOMBO;
+//	int Differential_Toe;	
+//	
+//	if (&o == &TFRPRudder) {
+//		
+//		GetAxisData(&o, x);
+//		axdata.val = AxisVal(o[x], &axdata);
+//		
+//		if(x == TRPLEFT | x == TRPRIGHT) {			
+//			
+//			axdata.locked = 1;
+//			Differential_Toe = -TFRPRudder[TRPRIGHT]/2 + TFRPRudder[TRPLEFT]/2;
+//			
+//			//apply curves/deadzones and output data
+//			Differential_Toe = AxisVal(Differential_Toe, &axdata);
+//			GameOutput(&o, TRPRIGHT, Differential_Toe);
+//				
+//			if (TFRPRudder[TRPLEFT] < TFRPRudder[TRPRIGHT])
+//				TRPCOMBO = TFRPRudder[TRPRIGHT];
+//			else
+//				TRPCOMBO = TFRPRudder[TRPLEFT];
+//			
+//			//apply curves/deadzones and output data
+//			TRPCOMBO = AxisVal(TRPCOMBO, &axdata);			
+//			GameOutput(&o, TRPLEFT, -TRPCOMBO);
+//			
+//		}//end inner if
+//		
+//		if(!axdata.locked & !axdata.relative) 
+//			GameOutput(&o, x, axdata.val);
+//			
+//	}//end out if
+//	
+//	else DefaultMapping(&o, x);
+//
+//}//end EventHandler
+
+
+	
+//9.0 EventHandle - original
+//int EventHandle(int type, alias o, int x)
+//{
+//	DefaultMapping(&o, x);
+//}
+
+//best resource was on reddit: https://www.reddit.com/r/EliteDangerous/comments/5d0lj6/help_configuring_pedals_with_target/?st=jacpgpgr&sh=de5a2ae6
+//Event Handler used to combine the two toe brake axis into a single axis for Strafing L/R
+int EventHandle(int type, alias o, int x)
+     {
+     int STRAFEAXIS;
+
+        if (&o == &TFRPRudder) {  
+            GetAxisData(&o, x);
+            axdata.val = AxisVal(o[x], &axdata);
+            if(x == TRPLEFT | x == TRPRIGHT) { //maybe I need an else here to pass through the rudder axis???
+                //axdata.locked = 1; //disable the toe brakes
+                STRAFEAXIS = -TFRPRudder[TRPRIGHT]/2 + TFRPRudder[TRPLEFT]/2;  //Toe brakes rest high, so negate and divide by 2
+                DXAxis(DX_XROT_AXIS, STRAFEAXIS);  //Map to extra axis.
+            } else DefaultMapping(&o, x);
+            //axdata.locked = 1;                                        //Uncomment to disable pedals but keep TRPCOMBO axis
+            if(!axdata.locked & !axdata.relative) GameOutput(&o, x, axdata.val);
+
+        }
+        else DefaultMapping(&o, x);
+     }
+
+//use this from http://simhq.com/forum/ubbthreads.php/topics/4274311/TFRP_Rudders_-_Combined_toe_br
+//see how to combine 2 peddal axis into one for strafe L/R
+	
 		
 // End of File
 // qp
