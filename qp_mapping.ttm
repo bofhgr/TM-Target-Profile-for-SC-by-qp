@@ -147,6 +147,17 @@
 	define Others_TeamSpeak_PTT SCRLCK // would be nice to add a hotmic mode *****
 
 // Direct X Button Assignments
+//DXHAT Not Assigned
+	//DXAxis - 8 total Axis
+	// X - Controls Yaw
+	// Y - Controls Pitch
+	// Z - Controls Roll
+	// XROT - Strafe L/R
+	// YROT - Strafe F/B
+	// ZROT - Strafe U/D
+	// SLIDER - TrackIR Zoom
+	// THROTTLE - Throttle 0-100
+// Map SCX/Y to mouse?
 	// DX1 Fire G1
 	// DX2 Fire G2
 	// DX3 Fire G3
@@ -173,7 +184,7 @@
 	// DX25 Gimble Lock
 	// DX26 Target Reticle Focus // reverted to 'r' default
 	// DX27 Target_Head_Tracking
-	// DX28 ** Reserved
+	// DX28 Chinahatforward
 	// DX29 ** Reserved
 	// DX30 ** Reserved
 	// DX31 ** Reserved
