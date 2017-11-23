@@ -1,21 +1,19 @@
 <!-- 20/10/2017 - Star Citizen 3.0 PTU - by qp -->
-<ActionMaps version="1" optionsVersion="2" rebindVersion="2" profileName="qp Warthog HOTAS for 3.0">
+<ActionMaps version="1" optionsVersion="2" rebindVersion="2" profileName="qp Thrustmaster config for 3.0">
 
 <!-- 
 in this version:
-js1: warthog combined
-JS2: peddals
-js3: redated
-need to add gamepad as well
+js1: All your joystics map to a single joystick, simplifying your life :)
+note2self: need to add xbox gamepad as well
+note2self:review add bindings cleared a few from view and aim
 -->
 
 
- <CustomisationUIHeader label="qp 3.0" description="qp Warthog HOTAS for 3.0" image="">
+ <CustomisationUIHeader label="qp 3.0" description="qp Thrustmaster config for 3.0" image="">
   <devices>
    <keyboard instance="1"/>
    <mouse instance="1"/>
    <joystick instance="1"/>
-   <joystick instance="2"/>
   </devices>
   
   <categories>
@@ -29,10 +27,6 @@ need to add gamepad as well
  </CustomisationUIHeader>
  <options type="keyboard" instance="1"/>
  <options type="joystick" instance="1"/>
- <options type="joystick" instance="2">
-  <flight_move_roll exponent="0.5"/>
-  <flight_move_strafe_lateral exponent="0.5"/>
- </options>
  
 
 <modifiers />
@@ -153,8 +147,24 @@ need to add gamepad as well
   <action name="v_throttle_toggle_minmax">
    <rebind input="kb1_ "/>
   </action>
+  
+  <action name="v_strafe_left">
+   <rebind input="js1_ "/>
+  </action>
+  
+  <action name="v_strafe_right">
+   <rebind input="js1_ "/>
+  </action>
  
  <!-- add bindings -->
+ 
+  <action name="v_strafe_lateral">
+   <rebind input="js1_rotx"/>
+  </action>
+ 
+  <action name="v_decoupled_strafe_lateral">
+   <rebind input="js1_rotx"/>
+  </action>
  
   <action name="v_throttle_zero">
    <rebind input="js1_button18"/>
@@ -173,7 +183,7 @@ need to add gamepad as well
   </action>
 
   <action name="v_strafe_longitudinal">
-   <rebind input="js1_z"/>
+   <rebind input="js1_roty"/>
   </action>
 
   <action name="v_landing_target_lock">
@@ -181,15 +191,7 @@ need to add gamepad as well
   </action>
 
   <action name="v_decoupled_strafe_longitudinal">
-   <rebind input="js1_z"/>
-  </action>
-  
-  <action name="v_decoupled_strafe_right">
-   <rebind input="js2_y"/>
-  </action>
-  
-  <action name="v_decoupled_strafe_left">
-   <rebind input="js2_x"/>
+   <rebind input="js1_roty"/>
   </action>
   
   <action name="v_decoupled_strafe_vertical">
@@ -217,20 +219,12 @@ need to add gamepad as well
   </action>
   
   <action name="v_decoupled_roll">
-   <rebind input="js2_rotz"/>
+   <rebind input="js1_z"/>
   </action>
   
   <action name="v_ifcs_toggle_esp">
    <rebind input="js1_button9" activationMode="hold"/>
    <addbind input="js1_button8"/>
-  </action>
-  
-  <action name="v_strafe_right">
-   <rebind input="js2_y"/>
-  </action>
-  
-  <action name="v_strafe_left">
-   <rebind input="js2_x"/>
   </action>
   
   <action name="v_strafe_vertical">
@@ -246,7 +240,7 @@ need to add gamepad as well
   </action>
   
   <action name="v_roll">
-   <rebind input="js2_rotz"/>
+   <rebind input="js1_z"/>
   </action>
   
   <action name="v_toggle_qdrive_engagement">
@@ -306,11 +300,11 @@ need to add gamepad as well
 <!-- add bindings -->
  
   <action name="v_aim_yaw">
-   <rebind input="js1_rotx"/>
+   <rebind input="js1_"/>
   </action>
   
   <action name="v_aim_pitch">
-   <rebind input="js1_roty"/>
+   <rebind input="js1_"/>
   </action>
  
   <action name="v_target_cycle_reticle_mode">
@@ -489,7 +483,7 @@ need to add gamepad as well
   </action>
 
   <action name="eva_roll">
-   <rebind input="js2_rotz"/>
+   <rebind input="js1_z"/>
   </action>
 
   <action name="eva_strafe_vertical">
@@ -497,7 +491,11 @@ need to add gamepad as well
   </action>
 
   <action name="eva_strafe_longitudinal">
-   <rebind input="js1_z"/>
+   <rebind input="js1_roty"/>
+  </action>
+  
+  <action name="eva_strafe_lateral">
+   <rebind input="js1_rotx"/>
   </action>
  
  </actionmap>
@@ -508,11 +506,11 @@ need to add gamepad as well
   
   <!-- add bindings -->
   <action name="v_view_pitch">
-   <rebind input="js1_roty"/>
+   <rebind input="js1_"/>
   </action>
 
   <action name="v_view_yaw">
-   <rebind input="js1_rotx"/>
+   <rebind input="js1_"/>
   </action>
 
   <action name="v_view_zoom_out">
