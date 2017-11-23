@@ -1,7 +1,7 @@
 **************************************************************************
 	STAR CITIZEN TARGET Profile
 		- Thrustmaster Warthog HOTAS
-		- Thrustmaster T1600 Dual stick
+		- Thrustmaster T16000 Dual stick
 		- Thrustmaster Ruder Pedals
 		
 	Written by qp
@@ -10,7 +10,11 @@
 **************************************************************************
 
 Version Info
-Updated in anticipation for Star Citizen 3.0
-Last Update: Oct 20 2017
+Updated for Star Citizen 3.0 PTU
+Last Update: Nov 23 2017
 
-This page is under construction
+This profile is a work-in-progress
+
+Currently given testing access to members of Old Blood and Guts gaming community
+Learn more at oldbloodandguts.com
+you can also contact me on Discord qp#8888
