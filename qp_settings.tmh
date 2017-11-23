@@ -17,11 +17,11 @@
 	
 // Custom Curves and Scale for analog axis
 	define SCMMode_Curve 3
-	define SCMMode_Scale 1 // should be 0 for most people, 1 for center mount at 45 degrees
-//	define Rotation_Scale 0.039015
-	define PREMode_Curve 3
-	define PREMode_Scale -2
-	define CRUMode_Curve 1
+	define SCMMode_Scale 0 // should be 0 for most people, 1 for center mount at 45 degrees
+//	define Rotation_Scale 0.039015 //NOT USED
+	define PREMode_Curve 5
+	define PREMode_Scale -1
+	define CRUMode_Curve 0
 	define CRUMode_Scale 1
 	define Mouse_Curve 5
 	define Mouse_Scale -5
