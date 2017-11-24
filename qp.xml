@@ -3,9 +3,11 @@
 
 <!-- 
 in this version:
-js1: All your joystics map to a single joystick, simplifying your life :)
-note2self: need to add xbox gamepad as well
-note2self:review add bindings cleared a few from view and aim
+js1: warthog combined with peddals
+JS2: peddals not used redacted
+js3: redacted
+need to add gamepad as well
+review add bindings cleared a few from view and aim
 -->
 
 
@@ -592,6 +594,18 @@ note2self:review add bindings cleared a few from view and aim
    <rebind input="js1_slider2"/>
   </action>
   
+ </actionmap>
+ 
+  <actionmap name="default">
+  
+  <!-- clear bindings -->
+  
+  <!-- add bindings -->
+
+  <action name="enable_cursor_ui_2d">
+   <rebind input="kb1_ralt+slash"/>
+  </action>
+ 
  </actionmap>
  
  <actionmap name="player_choice">

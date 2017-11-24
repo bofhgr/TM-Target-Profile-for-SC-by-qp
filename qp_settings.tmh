@@ -1,45 +1,99 @@
 //**************************************************************************
 //	STAR CITIZEN TARGET Profile
-//		- For the Thrustmaster Warthog HOTAS
+//		- Thrustmaster Warthog HOTAS
+//		- Thrustmaster T16000 Dual sticks
+//		- Thrustmaster Rudder Pedals
 //		
-//		Written by qp
+//	Written by qp
 // 		https://robertsspaceindustries.com/citizens/q-p
 //
 //**************************************************************************
 
-// Center Stick Mounting Rotation Fix
-	define Stick_Rotation 45 // use 0 if you haven't modified your warthog for center mounting (default), otherwise use the degrees of rotation clockwise
+//YOU MAY EDIT THIS FILE ACCORDING TO THE INSTRUCTIONS
+//MAKE SURE YOU NOTE THE DEFAULT VALUES BEFORE CHANGING IF YOU ARE NOT SURE WHAT YOU ARE DOING
 
-// User-defined Settings
-	define User_Devices_Pedals 0 // not used ****
-	define User_Devices_HeadTracking 0 // not used ****
-	define User_Devices_Center_Joystick 0 // not used ****
+//SYNTAX in this file is as follows:
+//define <something> "button to press"
+// you may freely change "button to press" to your preffered value/button/setting
+
+// Push To Talk button 
+	//depending on what type of key you use for PPT, you'll need to change it using TARGET definition of that button. Ask qp if you are not sure how.
+	//default value is Scroll Lock
+	define Voice_Comms_PPT SCRLCK 
+	
+// Head Tracking Reset /  Center Head-tracking camera
+	//default is Right Alt + Break
+	define View_Center_HeadTracking R_ALT + BRK
+// Head Tracking Precision mode toggle
+	//default is Right Alt + F7
+	define View_TrackIR_Precision R_ALT + F7
 	
 // Custom Curves and Scale for analog axis
+	//You can adjust the below for your own prefferences. Be aware of the following (read the script editor manual for details).
+		// Curve values from -20 to +20, 0 means 1:1 physical to logical axis mapping (not recommened unless you have a very long stick extension). A negative curve will make center less accurate and extremes more accurate, a positive curve will make center more accurate and extremes less so.
+		// Deadzones are % of total axis so use 0-5 if needed
+		// Scale values from -20 to +20, 0 means normal scale. Scale negative values will limit the travel on the axis, while positive values will make it so that axis reach their maximum value before reaching the max physical travel
+//Also note that the values of curves and deadzones below are multiplied and/or divided for greater precision within the engine of the script, so make small changes and observe the differences before making drastic changes to these values.
+	
 	define SCMMode_Curve 3
 	define SCMMode_Scale 0 // should be 0 for most people, 1 for center mount at 45 degrees
-//	define Rotation_Scale 0.039015 //NOT USED
-	define PREMode_Curve 5
-	define PREMode_Scale -1
-	define CRUMode_Curve 0
-	define CRUMode_Scale 1
-	define Mouse_Curve 5
-	define Mouse_Scale -5
-	define Mouse_Deadzone 15
 	
+	define PREMode_Curve 5
+	define PREMode_Scale -2
+	
+	define CRUMode_Curve -2
+	define CRUMode_Scale 0
+	
+		//note that mouse curves here do not affect your mouse, just the emulated mouse axis used by this script.
+	define Mouse_Curve 3
+	define Mouse_Scale -5
+	
+// Custom Deadzone Settings
+	
+	define Mouse_Deadzone 30
+	
+	//warthog throttle
+	define Left_Throttle_Deadzone 7
+	define Right_Throttle_Deadzone 7
+	
+	//dual sticks left
+	define Left_Stick_Rudder_Deadzone 2
+	define Left_Stick_Y_Deadzone 2
+	define Left_Stick_X_Deadzone 2
+	
+	//dual sticks right
+	define Right_Stick_Rudder_Deadzone 2
+	define Right_Stick_Y_Deadzone 0
+	define Right_Stick_X_Deadzone 0
+	
+	//rudder
+	define Rudder_Deadzone 1
 	
 // Timers
+	// These timers control how many milliseconds to hold a key for the action to occur. See the engine.tmh for implementation examples.
 	define Countermeasure_Timer 100
 	define Targeting_Hold_Timer 500
 	define Eject_Hold_Timer 1100
 	define Auto_Land_Hold_Timer 800
-	define HUD_Response_Timer 1250
+	define HUD_Response_Timer 1250 //deprecated in 3.0
 	define Initialization_Timer 2500
+	define Emergency_Breaks_Timer 1350
 
 // Other user-defined settings
-	define Left_Throttle_Deadzone 15
-	define Right_Throttle_Deadzone 15
-	define LED_Level 128
+	define LED_Level 128 // used to control brightness of Leds on warthog throttle base. this value is 50% - goes 0 to 255 max.
+	
+	
+
+// Center Stick Mounting Rotation Fix
+//	define Stick_Rotation 45 // you can ignore if you haven't modified your warthog for center mounting (default), otherwise use the degrees of rotation clockwise. you need to uncomment lines in qp.tmc and also adjust the scale value to +1 for 45degrees twist for SCM.
+//	define Rotation_Scale 0.039015 //NOT USED
+	
+	
+// User-defined Settings // not used ****
+	define User_Devices_Pedals 0 // not used ****
+	define User_Devices_HeadTracking 0 // not used ****
+	define User_Devices_Center_Joystick 0 // not used ****
+	
 	
 // End of File
 // qp
