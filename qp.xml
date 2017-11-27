@@ -27,6 +27,21 @@ review add bindings cleared a few from view and aim
   </categories>
   
  </CustomisationUIHeader>
+ 
+  <deviceoptions name="Mouse">
+  <option input="@pause_OptionsMouseSmoothing" saturation="0"/>
+  <option input="@pause_OptionsMouseSmoothing" saturation="0"/>
+ </deviceoptions>
+ <deviceoptions name="Thrustmaster Combined {FFFF044F-0000-0000-0000-504944564944}">
+  <option input="y" deadzone="0"/>
+  <option input="x" deadzone="0"/>
+  <option input="z" deadzone="0"/>
+  <option input="rotx" deadzone="0"/>
+  <option input="roty" deadzone="0"/>
+  <option input="rotz" deadzone="0"/>
+  <option input="slider1" deadzone="0"/>
+  <option input="slider2" deadzone="0"/>
+ </deviceoptions>
  <options type="keyboard" instance="1"/>
  <options type="joystick" instance="1"/>
  
@@ -71,6 +86,9 @@ review add bindings cleared a few from view and aim
   
  <!-- add bindings -->
    
+  <action name="v_ifcs_toggle_vector_decoupling">
+   <rebind input="js1_button28"/>
+  </action>
 
   <action name="v_view_dynamic_focus_out">
    <rebind input="js1_button7"/>
@@ -314,7 +332,7 @@ review add bindings cleared a few from view and aim
   </action>
 
   <action name="v_target_missile_lock_focused">
-   <rebind input="js1_button5"/>
+   <rebind input="js1_button29"/>
   </action>
 
   <action name="v_target_reticle_focus">
@@ -440,6 +458,14 @@ review add bindings cleared a few from view and aim
   
   <!-- add bindings -->
   
+  <action name="xi_movex">
+   <rebind input="js1_rotx"/>
+  </action>
+  
+  <action name="xi_movey">
+   <rebind input="js1_roty"/>
+  </action>
+  
   <action name="Crouch">
    <rebind input="kb1_mouse4"/>
   </action>
@@ -454,10 +480,6 @@ review add bindings cleared a few from view and aim
   
   <action name="spectate_zoom_in">
    <rebind input="js1_button6"/>
-  </action>
-  
-  <action name="xi_movey">
-   <rebind input="js1_z"/>
   </action>
 
   <action name="xi_rotateyaw">
