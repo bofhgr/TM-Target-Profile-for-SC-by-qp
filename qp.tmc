@@ -311,11 +311,11 @@ int main()
 						// Back is Sensitivity mode
 					MapKey(&Throttle, BSB, EXEC ("Sensitivity_Mode();"));
 						// Middle is Normal mode
-					MapKeyR(&Throttle, BSB, EXEC ("Precision_Mode();"));
+					MapKeyRIO(&Throttle, BSB, EXEC ("Combat_Mode();"), EXEC ("Precision_Mode();"));
 						// Forward is Agility mode
 					MapKey(&Throttle, BSF, EXEC ("Agility_Mode();"));
 						// Middle is Normal mode
-					MapKeyR(&Throttle, BSF, EXEC ("Precision_Mode();"));
+					MapKeyRIO(&Throttle, BSF, EXEC ("Combat_Mode();"), EXEC ("Precision_Mode();"));
 				
 			//2.11 China Hat controls IFCS Safeties
 					// Forward: Decouple / with paddle: ESP Toggle
@@ -563,13 +563,13 @@ int main()
 				// Direction (when Hold) / With Paddle (when Hold)
 					// Targeting controlled by TMS
 						// UP Target Reticle (Pin Target) / Cycle Pinned
-					MapKeyIO(&Joystick, H2U, PULSE + Targeting_Cycle_Pinned_Target, TEMPO(Targeting_Focus_Reticle	, PULSE + Targeting_Pin_Target, Targeting_Hold_Timer));
+					MapKeyIO(&Joystick, H2U, PULSE + Targeting_Cycle_Pinned_Target, TEMPO(Targeting_Focus_Reticle, PULSE + Targeting_Pin_Target, Targeting_Hold_Timer));
 						// DOWN Target Nearest Hostile (Pin Target) / Cycle Pinned Back
-					MapKeyIO(&Joystick, H2D, PULSE + Targeting_Cycle_Back_Pinned_Target, TEMPO(Targeting_Nearest_Hostile	, PULSE + Targeting_Pin_Target, Targeting_Hold_Timer));
+					MapKeyIO(&Joystick, H2D, PULSE + Targeting_Cycle_Back_Pinned_Target, TEMPO(Targeting_Nearest_Hostile, PULSE + Targeting_Pin_Target, Targeting_Hold_Timer));
 						// RIGHT Cycle Hostile / Cycle Friendly
-					MapKeyIO(&Joystick, H2R, PULSE + Targeting_Cycle_Friendly	, PULSE + Targeting_Cycle_Hostile);
+					MapKeyIO(&Joystick, H2R, PULSE + Targeting_Cycle_Friendly, PULSE + Targeting_Cycle_Hostile);
 						// LEFT Cycle Hostile Back / Cycle Friendly Back
-					MapKeyIO(&Joystick, H2L, PULSE + Targeting_Cycle_Back_Friendly	, PULSE + Targeting_Cycle_Back_Hostile);
+					MapKeyIO(&Joystick, H2L, PULSE + Targeting_Cycle_Back_Friendly, PULSE + Targeting_Cycle_Back_Hostile);
 					
 			//3.4 Triger Button (TG1, TG2, S2, Hat 1)
 					// TG1 Fires Weapon Group 1
@@ -655,7 +655,11 @@ if (Controller_TM16000_DualStick==1)
 			MapAxis(&right, THR, DX_SLIDER_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
 		
 			//Makes the Left Stick Trigger the Shift layer trigger
-			SetShiftButton(&left, TS1);
+			if(Controller_Warthog_HOTAS==1)
+			{
+				//disabling Shift on Dualsticks if you have Warthog HOTAS also selected
+				//SetShiftButton(&left, TS1);
+			} else {SetShiftButton(&left, TS1);}
 
 			// Left Stick
 				// make sure nothing happens when pressing left trigger alone
@@ -686,7 +690,7 @@ if (Controller_TM16000_DualStick==1)
 				MapKey (&left, B6, PULSE + Flight_Ready_Mode);
 				MapKey (&left, B7, TEMPO(PULSE + Flight_Landing_Mode, Flight_Auto_Land, Auto_Land_Hold_Timer));
 				//B8-10
-				MapKey (&left, B8, EXEC ("Sensitivity_Mode();"));
+				MapKey (&left, B8, TEMPO (EXEC ("Combat_Mode();"), EXEC ("Sensitivity_Mode();"), Flight_Mode_Change_Timer));
 				MapKey (&left, B9, EXEC ("Precision_Mode();"));
 				MapKey (&left, B10, EXEC ("Agility_Mode();"));
 				//B11-13
@@ -776,7 +780,7 @@ if (Controller_TMFR_Pedals==1)
 } // end of TMFR Pedals config
 	
 	//Set Starting IFCS Flight Mode
-	Precision_Mode();		//You may change to Precision_Mode or Sensitivity_Mode or Agility_Mode if desired.
+	Starting_Advanced_Flight_Mode();		//You may change to Precision_Mode or Sensitivity_Mode or Agility_Mode if desired.
 	
 } //end of Main Initialization
 	

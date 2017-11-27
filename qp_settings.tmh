@@ -55,7 +55,7 @@
 	
 	define Controller_Warthog_HOTAS 1 //TM Warthog HOTAS - Fully Supported
 	
-	define Controller_TM16000_DualStick 0 //TM16000 HOSAS - Supported * Some buttons are not mapped yet
+	define Controller_TM16000_DualStick 1 //TM16000 HOSAS - Supported * Some buttons are not mapped yet
 	
 	define Controller_TMFR_Pedals 1 //TM Flight Rudder Pedals - Supported * Pedals do not apply correct curve settings
 	
@@ -122,16 +122,24 @@
 //	**** Before making changes, please note that the values of curves and deadzones below are multiplied and/or divided depending on the selected flight mode, make sure you test how your change affects each Flight mode.
 //
 	//Advanced IFCS Flight Control Modes
-	// Currently are 3 Advanced Flight Modes:
+		//Select Starting Advanced IFCS Flight Control Mode. This will affect the setting selected when you run the script.
+		define Starting_Advanced_Flight_Mode Precision_Mode //You may choose between: Precision_Mode (Default), Combat_Mode, Sensitivity_Mode, Agility_Mode
+	
+	// Currently are 4 Advanced Flight Modes:
 		// Sensitivity 	| Limits all truster output to 50% All controls behave much 'slower' allowing for fine control. Ideal for landings.
 			define Sensitivity_Mode_Curve 5 //Default:5
 			define Sensitivity_Mode_Scale -2 //Default:-2
 		// Precision	| Provides more precision near the center of the control axis for better aim in dogfighting. Ideal for normal flying and combat.
-			define Precision_Mode_Curve 3 //Default:3
+			define Precision_Mode_Curve 2 //Default:2
 			define Precision_Mode_Scale 0 //Default:0
 		// Agility		| Provides more precision near the edges of the control axis for faster course changes at sudden movements. Ideal for racing and turret control.
 			define Agility_Mode_Curve -1 //Default:-1
 			define Agility_Mode_Scale 0 //Default:0
+		// Combat		| Combines Precision mode for Rotational axis and Agility mode for Translational axis. You may set these values separately below.
+			define Combat_Mode_Rotation_Curve 3 //Default:3
+			define Combat_Mode_Rotation_Scale 0 //Default:0
+			define Combat_Mode_Translation_Curve -2 //Default:-2
+			define Combat_Mode_Translation_Scale 0 //Default:0 
 	//Mouse
 		//note that curves here do not affect your mouse in-game, just the emulated mouse axis used by this script.
 		define Mouse_Curve 3 //Default:3
@@ -179,6 +187,7 @@
 	define Initialization_Timer 2500 //Default:2500
 	define Emergency_Breaks_Timer 1350 //Default:1350
 	define Lock_Multiple_Missiles_Timer 2000 //Default:2000
+	define Flight_Mode_Change_Timer 1300 //Default:1300
 
 //*****************************************************************************************************************
 /////////// SECTION 7.0 - LED Control

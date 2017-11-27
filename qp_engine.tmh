@@ -270,7 +270,49 @@
 				Transition_Mode();
 				Flight_Mode=2;
 			}	
-	
+	int Combat_Mode()
+			{				
+			if (Controller_Warthog_HOTAS==1)
+			{//code to change axis assignments
+				MapAxis(&Throttle, THR_RIGHT, DX_YROT_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
+				//MapAxis(&Throttle, THR_FC, DX_THROTTLE_AXIS, AXIS_REVERSED, MAP_ABSOLUTE);
+			//code to change the curves on the axis
+				//Warthog HOTAS
+					//Reset Curve for Right Throttle
+					SetJCurve(&Throttle, THR_RIGHT, 0, 100);
+					//Disable AB on axis
+					KeyAxis(&Throttle, THR_RIGHT, '', 0);
+					SetSCurve(&Joystick, JOYX, 0, 0, 0, Combat_Mode_Rotation_Curve, Combat_Mode_Rotation_Scale);
+					SetSCurve(&Joystick, JOYY, 0, 0, 0, Combat_Mode_Rotation_Curve, Combat_Mode_Rotation_Scale);
+					//SetSCurve(&Throttle, THR_FC, 0, 0, 0, Combat_Mode_Curve, Combat_Mode_Scale);
+					SetSCurve(&Throttle, THR_LEFT, 0, Left_Throttle_Deadzone/2, 0, Combat_Mode_Translation_Curve, Combat_Mode_Translation_Scale);
+					SetSCurve(&Throttle, THR_RIGHT, 0, Right_Throttle_Deadzone/2, 0, Combat_Mode_Translation_Curve, Combat_Mode_Translation_Scale);
+			}
+			if (Controller_TMFR_Pedals==1)
+			{//Rudder Pedals
+					SetSCurve(&TFRPRudder, TRUDDER, 0, Rudder_Deadzone/2, 0, Combat_Mode_Translation_Curve, Combat_Mode_Translation_Scale);
+					SetSCurve(&TFRPRudder, TRPRIGHT, 0, 0, 0, Combat_Mode_Translation_Curve, Combat_Mode_Translation_Scale);
+					SetSCurve(&TFRPRudder, TRPLEFT, 0, 0, 0, Combat_Mode_Translation_Curve, Combat_Mode_Translation_Scale);
+			}			
+			if (Controller_TM16000_DualStick==1)
+			{//Dual Stick - Right
+					SetSCurve(&right, JOYX, 0, Right_Stick_X_Deadzone, 0, Combat_Mode_Rotation_Curve, Combat_Mode_Rotation_Scale);
+					SetSCurve(&right, JOYY, 0, Right_Stick_Y_Deadzone, 0, Combat_Mode_Rotation_Curve, Combat_Mode_Rotation_Scale);
+					SetSCurve(&right, RUDDER, 0, Right_Stick_Rudder_Deadzone, 0, Combat_Mode_Rotation_Curve, Combat_Mode_Rotation_Scale);
+					//SetSCurve(&right, THR, 0, 0, 0, Combat_Mode_Curve, Combat_Mode_Scale);
+				//Dual Stick - Left
+					SetSCurve(&left, JOYX, 0, Left_Stick_X_Deadzone/2, 0, Combat_Mode_Translation_Curve, Combat_Mode_Translation_Scale);
+					SetSCurve(&left, JOYY, 0, Left_Stick_Y_Deadzone/2, 0, Combat_Mode_Translation_Curve, Combat_Mode_Translation_Scale);
+					SetSCurve(&left, RUDDER, 0, Left_Stick_Rudder_Deadzone/2, 0, Combat_Mode_Translation_Curve, Combat_Mode_Translation_Scale);
+					//Set Throttle to 0-100 at 98% of physical travel
+					SetJCurve(&left, THR, 98, 100);
+					// Make Afterburner Turn on when Throttle >98%
+					KeyAxis(&left, THR, 0, AXMAP1(LIST(0,2,100), EXEC("AfterBurnerOFF();"), EXEC("AfterBurnerON();"), 0));
+			}
+			//code to handle transition
+				Transition_Mode();
+				Flight_Mode=4;
+			}
 	// 2.3 Agility
 		int Agility_Mode()
 			{	
