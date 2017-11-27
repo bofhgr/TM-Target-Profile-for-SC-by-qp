@@ -573,9 +573,9 @@ int main()
 					
 			//3.4 Triger Button (TG1, TG2, S2, Hat 1)
 					// TG1 Fires Weapon Group 1
-					MapKey(&Joystick, TG1, CHAIN(Weapons_Fire_G1, Systems_IFCS_ESP));	// Fire weapon group '1' or '2'
+					MapKey(&Joystick, TG1, Weapons_Fire_G1);	// Fire weapon group '1' or '2'
 					// TG2 fires Weapon Groups 1+2+3+4
-					MapKey(&Joystick, TG2, CHAIN(Systems_IFCS_ESP, Weapons_Fire_G1, Weapons_Fire_G2, Weapons_Fire_G3, Weapons_Fire_G4));	// Fire weapon group '1' through '4'
+					MapKey(&Joystick, TG2, CHAIN(Weapons_Fire_G1, Weapons_Fire_G2, Weapons_Fire_G3, Weapons_Fire_G4));	// Fire weapon group '1' through '4'
 					
 			//3.5 S1 cylces between Weapon Groups 1 - 4 for TG1, along with LEDs 1 & 2
 						// LEDs 1 & 2 will help you identify the selected weapon group
@@ -583,7 +583,7 @@ int main()
 							// LED 1 OFF, LED 2 ON: Weapon Group 2
 							// LED 1 ON, LED 2 ON: Weapon Group 3
 							// LED 1 OFF, LED 2 OFF: Weapon Group 4
-					MapKey(&Joystick, S1, SEQ(CHAIN(EXEC("ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED1+LED2));"),EXEC("MapKey(&Joystick, TG1, CHAIN(Weapons_Fire_G2, Systems_IFCS_ESP));")),CHAIN(EXEC("ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED1+LED2));"),EXEC("MapKey(&Joystick, TG1, CHAIN(Weapons_Fire_G3, Systems_IFCS_ESP));")),CHAIN(EXEC("ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED1-LED2));"),EXEC("MapKey(&Joystick, TG1, CHAIN(Weapons_Fire_G4, Systems_IFCS_ESP));")),CHAIN(EXEC("ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED1-LED2));"),EXEC("MapKey(&Joystick, TG1, CHAIN(Weapons_Fire_G1, Systems_IFCS_ESP));"))));
+					MapKey(&Joystick, S1, SEQ(CHAIN(EXEC("ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED1+LED2));"),EXEC("MapKey(&Joystick, TG1, Weapons_Fire_G2);")),CHAIN(EXEC("ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED1+LED2));"),EXEC("MapKey(&Joystick, TG1, Weapons_Fire_G3);")),CHAIN(EXEC("ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED1-LED2));"),EXEC("MapKey(&Joystick, TG1, Weapons_Fire_G4);")),CHAIN(EXEC("ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED1-LED2));"),EXEC("MapKey(&Joystick, TG1, Weapons_Fire_G1);"))));
 					
 			//3.6 S2 locks Missiles, hold to fire
 					// S2 with paddle Mouse 1 click (for AR system) instead of decouple Systems_IFCS_Decouple
@@ -661,7 +661,7 @@ if (Controller_TM16000_DualStick==1)
 				// make sure nothing happens when pressing left trigger alone
 				MapKey (&left, TS1, 0); // remember: //Map_IO (Shift,noShift)
 				//TS2: 
-				MapKey (&left, TS2, Movement_Boost); 
+				MapKey (&left, TS2, CHAIN(Movement_Break,Movement_Boost)); 
 				//TS3: Brake  
 				MapKey (&left, TS3, TEMPO(PULSE + Weapons_Countermeasure_Launch, PULSE + Weapons_Countermeasure_Change, Countermeasure_Timer));
 				//TS4: 
@@ -701,7 +701,7 @@ if (Controller_TM16000_DualStick==1)
 				//TEMPO(key1, key2, delay)
 			// Right Stick
 				// TS1: fire G1, fire G1-4 with shift (left trigger)
-				MapKeyIO(&right, TS1, CHAIN(Systems_IFCS_ESP, Weapons_Fire_G1, Weapons_Fire_G2, Weapons_Fire_G3, Weapons_Fire_G4), CHAIN(Weapons_Fire_G1, Systems_IFCS_ESP)); //trigger
+				MapKeyIO(&right, TS1, CHAIN(Weapons_Fire_G1, Weapons_Fire_G2, Weapons_Fire_G3, Weapons_Fire_G4), Weapons_Fire_G1); //trigger
 				// TS2: Lock/Fire Missiles, Cycle Weapon Groups 1-4 for main trigger (with Shift)
 				MapKeyIO(&right, TS2, TEMPO (PULSE+Weapons_Lock_Missile,PULSE+Weapons_Lock_Missile,Lock_Multiple_Missiles_Timer), Weapons_Missile);
 				// TS3 (left button) Afterburner
@@ -726,22 +726,22 @@ if (Controller_TM16000_DualStick==1)
 		//I leave room here to configure the LEDs on the sticks to light up to help identify selected weapon group
 		//CHAIN(
 		//EXEC("ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED1+LED2));"),
-		EXEC("MapKeyIO(&right, TS1, CHAIN(Systems_IFCS_ESP, Weapons_Fire_G1, Weapons_Fire_G2, Weapons_Fire_G3, Weapons_Fire_G4), CHAIN(Weapons_Fire_G2, Systems_IFCS_ESP));")
+		EXEC("MapKeyIO(&right, TS1, CHAIN(Weapons_Fire_G1, Weapons_Fire_G2, Weapons_Fire_G3, Weapons_Fire_G4), Weapons_Fire_G2);")
 		//)
 		,
 		//CHAIN(
 		//EXEC("ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED1+LED2));"),
-		EXEC("MapKeyIO(&right, TS1, CHAIN(Systems_IFCS_ESP, Weapons_Fire_G1, Weapons_Fire_G2, Weapons_Fire_G3, Weapons_Fire_G4), CHAIN(Weapons_Fire_G3, Systems_IFCS_ESP));")
+		EXEC("MapKeyIO(&right, TS1, CHAIN(Weapons_Fire_G1, Weapons_Fire_G2, Weapons_Fire_G3, Weapons_Fire_G4), Weapons_Fire_G3);")
 		//)
 		,
 		//CHAIN(
 		//EXEC("ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED1-LED2));"),
-		EXEC("MapKeyIO(&right, TS1, CHAIN(Systems_IFCS_ESP, Weapons_Fire_G1, Weapons_Fire_G2, Weapons_Fire_G3, Weapons_Fire_G4), CHAIN(Weapons_Fire_G4, Systems_IFCS_ESP));")
+		EXEC("MapKeyIO(&right, TS1, CHAIN(Weapons_Fire_G1, Weapons_Fire_G2, Weapons_Fire_G3, Weapons_Fire_G4), Weapons_Fire_G4);")
 		//)
 		,
 		//CHAIN(
 		//EXEC("ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT+LED1-LED2));"),
-		EXEC("MapKeyIO(&right, TS1, CHAIN(Systems_IFCS_ESP, Weapons_Fire_G1, Weapons_Fire_G2, Weapons_Fire_G3, Weapons_Fire_G4), CHAIN(Weapons_Fire_G1, Systems_IFCS_ESP));")
+		EXEC("MapKeyIO(&right, TS1, CHAIN(Weapons_Fire_G1, Weapons_Fire_G2, Weapons_Fire_G3, Weapons_Fire_G4), Weapons_Fire_G1);")
 		//)
 		));
 				MapKey (&right, B12, PULSE + Weapons_Reticle_Mode);

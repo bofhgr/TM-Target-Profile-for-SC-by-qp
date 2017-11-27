@@ -26,13 +26,15 @@ you can also contact me on Discord qp#8888
 *****************************************************************************************************************
 Installation
 *****************************************************************************************************************
-Download a .zip from github that contains all needed files. Extract to a folder of your choosing.
+Download a .zip from github that contains all needed files. 
+
+Extract to a folder of your choosing.
 
 1. Copy qp.xml from the extracted folder into your StarCitizen\USER\Controls\Mappings folder. If the folder does not exist, make sure you run StarCitizen once and then exit the game.
 2. Open TARGET SCRIPT EDITOR. Go to MENU and select OPEN.
 3. Navigate to the extracted folder that contains qp.tmc file and open this file.
-4. Press the TOOLS menu and select the COMPILE button.
-5. You will see a list of files being opened as it reads qp.xml. Click on the qp_settings.tmh file and edit as required. Save changes and press COMPILE again.
+4. Press the TOOLS menu and select the COMPILE button. You will see a list of files being opened as it reads qp.tmc.
+5. Click on the qp_settings.tmh file and edit as required. Save changes and press COMPILE again.
 6. You should see "Compile Succeeded." as a message on the bottom half of TARGET SCRIPT EDITOR.
 7. Press RUN. You should see "main returned 0" - this means everything is OK.
 8. Start Star Citizen 3.0 PTU. Once in the main menu screen, press "~" to open the in-game console.
@@ -47,6 +49,5 @@ You may find the latest version of qp's Thrustmaster Joystick Button Mappings he
 *****************************************************************************************************************
 Known Issues:
 *****************************************************************************************************************
-- You need to keep ESP turned off when flying, this way it will only engage when firing at a target.
 - Various controls like analog view zoom are broken in current PTU builds.
 - Star Citizen might not load correctly the deadzones from qp.xml. Make sure your in-game deadzones are all at 0 value and all curves for all axis are set to 1.0. This is not the default for the game, you need to ensure it is applied until CIG fixes their controller support.
