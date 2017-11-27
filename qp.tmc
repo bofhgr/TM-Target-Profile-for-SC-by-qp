@@ -665,7 +665,7 @@ if (Controller_TM16000_DualStick==1)
 				//TS3: Brake  
 				MapKey (&left, TS3, TEMPO(PULSE + Weapons_Countermeasure_Launch, PULSE + Weapons_Countermeasure_Change, Countermeasure_Timer));
 				//TS4: 
-				MapKey (&left, TS4, Voice_Comms_PPT);
+				MapKey (&left, TS4, PULSE + Systems_IFCS_GSafe);
 				//Hat
 				MapKeyIO (&left, H1U, Shields_Transfer_Forward, TEMPO(PULSE + Systems_Power_Reset, PULSE + Shields_Reset, Reset_Hold_Timer));
 				MapKeyIO (&left, H1R, Shields_Transfer_Right, Systems_Power_Weapons);
@@ -707,7 +707,7 @@ if (Controller_TM16000_DualStick==1)
 				// TS3 (left button) Afterburner
 				MapKey (&right, TS3, Movement_Afterburner);
 				// TS4 (right button) GSafe
-				MapKey (&right, TS4, PULSE + Systems_IFCS_GSafe);
+				MapKey (&right, TS4, Voice_Comms_PPT);
 				//Hat
 				MapKeyIO (&right, H1U, Targeting_Cycle_Pinned_Target, TEMPO(Targeting_Focus_Reticle	, PULSE + Targeting_Pin_Target, Targeting_Hold_Timer));
 				MapKeyIO (&right, H1R, Targeting_Cycle_Friendly, Targeting_Cycle_Hostile);
