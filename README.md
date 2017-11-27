@@ -32,16 +32,15 @@ Download a .zip from github that contains all needed files. Extract to a folder 
 2. Open TARGET SCRIPT EDITOR. Go to MENU and select OPEN.
 3. Navigate to the extracted folder that contains qp.tmc file and open this file.
 4. Press the TOOLS menu and select the COMPILE button.
-5. You should see "Compile Succeeded." as a message on the bottom half of TARGET SCRIPT EDITOR.
-6. Press RUN. You should see "main returned 0" - this means everything is OK.
-7. Start Star Citizen 3.0 PTU. Once in the main menu screen, press "~" to open the in-game console.
-8. Type the command "pp_rebindkeys " include a space at the end. you can press "tab" to auto-complete. This will reset all keybindings to defaults.
-9. Type the command "pp_rebindkeys qp". You should see "njoy" message. You may close the console by pressing "~". 
-10. Enjoy :)
+5. You will see a list of files being opened as it reads qp.xml. Click on the qp_settings.tmh file and edit as required. Save changes and press COMPILE again.
+6. You should see "Compile Succeeded." as a message on the bottom half of TARGET SCRIPT EDITOR.
+7. Press RUN. You should see "main returned 0" - this means everything is OK.
+8. Start Star Citizen 3.0 PTU. Once in the main menu screen, press "~" to open the in-game console.
+9. Type the command "pp_rebindkeys " include a space at the end. you can press "tab" to auto-complete. This will reset all keybindings to defaults.
+10. Type the command "pp_rebindkeys qp". You should see "njoy" message. You may close the console by pressing "~". 
+11. Profit! njoy :)
 
-Recommended: In TARGET Script Editor under the TOOLS menu, click on OPTIONS and then click the Tab EDITOR. Select the first option so the script auto-loads every time you open the script editor, you will only have to click RUN.
-
-Diagrams of mapped buttons and function explanation are work in progress.
+Recommended extra step: In TARGET Script Editor under the TOOLS menu, click on OPTIONS and then click the Tab EDITOR. Select the first option so the script auto-loads every time you open the script editor, you will only have to click RUN.
 
 You may find the latest version of qp's Thrustmaster Joystick Button Mappings here: https://1drv.ms/x/s!AuKEmoCXDlmvwdRZCDnmGPjJ3Nmfgw
 
