@@ -3,7 +3,7 @@
 		Supports the below combinations of Thrustmaster products:
 		- Thrustmaster Warthog HOTAS (Fully Supported)
 		- Thrustmaster FCS HOTAS (WIP)
-		- Thrustmaster TM16000 Dual sticks (Supported)
+		- Thrustmaster TM16000 Dual sticks (Fully Supported)
 		- Thrustmaster Warthog Dual sticks (WIP)
 		- Thrustmaster Rudder Pedals (Supported)
 		- Thrustmaster MFDs (WIP)
