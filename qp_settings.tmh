@@ -130,13 +130,13 @@
 			define Sensitivity_Mode_Curve 5 //Default:5
 			define Sensitivity_Mode_Scale -2 //Default:-2
 		// Precision	| Provides more precision near the center of the control axis for better aim in dogfighting. Ideal for normal flying.
-			define Precision_Mode_Curve 2 //Default:2
+			define Precision_Mode_Curve 1 //Default:1
 			define Precision_Mode_Scale 0 //Default:0
 		// Agility		| Provides more precision near the edges of the control axis for faster course changes at sudden movements. Ideal for racing and turret control.
 			define Agility_Mode_Curve -1 //Default:-1
 			define Agility_Mode_Scale 0 //Default:0
 		// Combat		| Combines Precision mode for Rotational axis and Agility mode for Translational axis. Ideal for combat.
-			define Combat_Mode_Rotation_Curve 3 //Default:3
+			define Combat_Mode_Rotation_Curve 2 //Default:2
 			define Combat_Mode_Rotation_Scale 0 //Default:0
 			define Combat_Mode_Translation_Curve -2 //Default:-2
 			define Combat_Mode_Translation_Scale 0 //Default:0 
