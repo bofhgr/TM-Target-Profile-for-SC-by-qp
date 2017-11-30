@@ -23,11 +23,13 @@
 		// Include basic TARGET instructions
 		include "target.tmh"
 		// Include user customizable settings
-		include "qp_settings.tmh"
+		include "qp_custom_settings.tmh"
 		// Include custom bindings and keyboard mappings
 		include "qp_mapping.ttm"
-		// Include custom scripts, functions and routines
+		// Include scripts, functions and routines
 		include "qp_engine.tmh"
+		// Include Custom settings
+		include "qp_my_settings.tmh"
 	// 0.2 custom flags
 		// create a flag to track countermeasures
 		char countermeasure;
@@ -38,6 +40,8 @@
 		char Lights_FPS;
 		// Augmented Reality Mode
 		char AR_Mode;
+		// Swap Roll with Yaw
+		char Roll_Yaw_Swapped;
 	// 0.3 TM16000FCS L/R Setup
 		alias left;
 		alias right;
@@ -593,8 +597,8 @@ int main()
 				MapKeyIO (&left, B12, TEMPO(0, EXEC("ActKey(KEYON + Flight_Self_Destruct);DeferCall(2000, &ActKey, Flight_Self_Destruct);")), PULSE + Systems_Toggle_Shields);
 				MapKey (&left, B13, PULSE + Systems_Toggle_Engines);
 			//B14-16
-				MapKeyIO (&left, B14, SEQ(EXEC ("AR_Mode_Engage();"),EXEC ("AR_Mode_Disengage();")), View_Mobiglass);
-				MapKeyIO (&left, B15, PULSE + View_Chat, Flight_Match_Target_Velocity);
+				MapKey (&left, B14, TEMPO(SEQ(EXEC ("AR_Mode_Engage();"), EXEC ("AR_Mode_Disengage();")), Flight_Match_Target_Velocity, AR_Mode_Timer));
+				MapKeyIO (&left, B15, PULSE + View_Chat, PULSE + View_Mobiglass);
 				MapKeyIO (&left, B16, PULSE + View_Contacts, PULSE + Flight_QD_Engage);
 		// Right Stick Button Mapping
 			// TS1: fire G1, fire G1-4 with shift (left trigger)
@@ -642,7 +646,7 @@ int main()
 						//)
 					));
 				MapKey (&right, B12, PULSE + Weapons_Reticle_Mode);
-				MapKey (&right, B13, PULSE + Weapons_Gimble_Lock);
+				MapKeyIO (&right, B13, EXEC ("Swap_Roll_Yaw();"),PULSE + Weapons_Gimble_Lock);
 			//B14-16
 				MapKey (&right, B14, PULSE + View_Switch);
 				MapKey (&right, B15, 0);
@@ -665,6 +669,18 @@ int main()
 				MapAxis(&TFRPRudder, TRPLEFT, 0, AXIS_NORMAL, MAP_ABSOLUTE);
 	} // end of TMFR Pedals config
 	//.Rudder Pedals Initialization
+	if (Controller_Warthog_HOTAS==1 & Controller_TM16000_DualStick==1 & Controller_TMFR_Pedals==1)
+		{
+			if (Controller_Sofa==1)
+			{
+				SetShiftButton(&left, TS1);
+				Roll_Yaw_Swapped=1;
+			} else
+				{
+					SetShiftButton(&Joystick, S4, &Throttle, FLAPU, FLAPD);
+					Roll_Yaw_Swapped=1;
+				}
+		}
 } //end of Main Initialization
 	//.Main Initialization
 //Event Handler Initialization
