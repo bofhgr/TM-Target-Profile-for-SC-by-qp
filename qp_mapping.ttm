@@ -30,9 +30,11 @@
 	define Flight_Match_Target_Velocity DX13
 	define Flight_Self_Destruct L_ALT + BSP
 	define Flight_Mouse_Mode_Toggle R_ALT + 'm' // 2.6 r_alt+m called look ahead <- this I need on
-	define Flight_Mouse_Aim_Mode R_SHIFT // ? new in 2.6
+	define Flight_Cycle_Mouse_Aim_Mode R_SHIFT // ? new in 2.6
 	define Flight_Mouse_Move_Mode R_ALT + ','
 	define Flight_Ready_Mode F5
+	define Flight_Cycle_Mouse_Move_Mode L_ALT + ',' //new in 3.0? <-works??
+	define Flight_Swap_Roll_Yaw L_ALT + '.'
 	
 // Weapons
 	define Weapons_Fire_G1 DX1
@@ -58,8 +60,9 @@
 	define Targeting_Cycle_Back_Friendly 'j'
 	define Targeting_Cycle_All 'i'
 	define Targeting_Cycle_Back_All 'k'
-	define Targeting_Scan_Mode TAB
-	define Targeting_Target_Focus L_ALT + 'r'
+	define Targeting_Scan_Mode TAB //used for Scanning Mode Toggle and Scanning Mode - Radar Pulse
+	define Targeting_Scan_Mode_Focus_Target MOUSE_LEFT
+	define Targeting_Scan_Mode_Tag_Target MOUSE_MIDDLE
 	
 // Shields
 	define Shields_Reset KP5
@@ -78,7 +81,7 @@
 	define Systems_Toggle_Shields '5'
 	define Systems_Toggle_Engines '6'
 	define Systems_Power_Reset '0'
-	define Systems_IFCS_Decouple DX28 //add that to xml
+	define Systems_IFCS_Decouple DX28
 	define Systems_IFCS_GSafe DX10
 	define Systems_IFCS_COMSTAB DX11
 	define Systems_IFCS_ESP_Toggle DX8
@@ -89,6 +92,11 @@
 	define Systems_Cooler_Decrease_Rate L_ALT + KP7
 	define Systems_Power_Decrease L_ALT + KP4
 	define Systems_Power_Increase L_ALT + KP5
+	define Systems_Open_All_Doors F7
+	define Systems_Close_All_Doors F7
+	define Systems_Lock_All_Doors F8
+	define Systems_Unlock_All_Doors F8
+	define Systems_PIBS '.' //personal identification broadcast system
 
 // HUD
 	define HUD_Up USB[0x52] // Up Arrow
@@ -133,12 +141,14 @@
 	define View_Free_Look 'z' 	// free look mode in xml -  **** DXHATDOWN
 	define View_Zoom_In DX6
 	define View_Zoom_Out DX7
-	define View_Look_Behind DX23 // camera view mode - orbit cam ? ****
-	define View_Mobiglass F1 // also mobiglass //view scoreboard
+	define View_Look_Behind DX23
+	define View_Mobiglass F1 
 	define View_AR_Mode 'f'
 	define View_Chat F12
 	define View_Contacts F11
 	define View_Camera_Mode L_ALT + 'z' // same as look behind but works only on 3rd person cam? ****
+	define View_Map HOME // USB[0x4A] //Home
+	define View_Scoreboard F1
 	
 // Camera
 	define Camera_Target_Offset_Up UARROW
@@ -192,7 +202,7 @@
 	// DX6 Zoom In
 	// DX7 Zoom Out
 	// DX8 ESP Pulse
-	// DX9 ESP Hold
+	// DX9 ESP Hold   ***** not needed after ESP fix
 	// DX10 GSafe
 	// DX11 COMSTAB
 	// DX12 Reticle Mode

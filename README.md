@@ -16,9 +16,14 @@
 *****************************************************************************************************************
 Version Info
 Updated for Star Citizen 3.0 PTU
-Last Update: Nov 27 2017
+Last Update: Nov 30 2017
 *****************************************************************************************************************
 This profile is a work-in-progress
+	Brief Feature list:
+	- Custom Flight mode settings (currently 4)
+	- Designed for true Hands-on experience, you won't be needing your keyboard/mouse with HOTAS and HOSAS full support.
+	- Functions and macros customized for the most demanding users with no compromise
+	- Supports all TM products (WIP) and has ability to include your own personal settings
 *****************************************************************************************************************
 Currently given testing access to members of Old Blood and Guts gaming community
 Learn more at oldbloodandguts.com
@@ -49,5 +54,7 @@ You may find the latest version of qp's Thrustmaster Joystick Button Mappings he
 *****************************************************************************************************************
 Known Issues:
 *****************************************************************************************************************
+- Targeting Turrets still is not great, CIG uses the look axis to control them instead of aim axis, some bugs there for sure.
 - Various controls like analog view zoom are broken in current PTU builds.
 - Star Citizen might not load correctly the deadzones from qp.xml. Make sure your in-game deadzones are all at 0 value and all curves for all axis are set to 1.0. This is not the default for the game, you need to ensure it is applied until CIG fixes their controller support.
+- Mobiglass interaction and mouse movement is not fully supported yet, but you can still use the new Augmented Reality system with your setup.
