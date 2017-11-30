@@ -59,22 +59,6 @@ review add bindings cleared a few from view and aim
   <actionmap name="spaceship_view">
  <!-- clear bindings -->
  
-  <action name="v_view_pitch_down">
-   <rebind input="js1_hat1_down"/>
-  </action>
-  
-  <action name="v_view_pitch_up">
-   <rebind input="js1_hat1_up"/>
-  </action>
-  
-  <action name="v_view_yaw_right">
-   <rebind input="js1_hat1_right"/>
-  </action>
-  
-  <action name="v_view_yaw_left">
-   <rebind input="js1_hat1_left"/>
-  </action>
-
   <action name="v_view_pitch">
    <rebind input="js1_ "/>
   </action>
@@ -92,7 +76,22 @@ review add bindings cleared a few from view and aim
   </action>
   
  <!-- add bindings -->
-   
+  <action name="v_view_pitch_down">
+   <rebind input="js1_hat1_down"/>
+  </action>
+  
+  <action name="v_view_pitch_up">
+   <rebind input="js1_hat1_up"/>
+  </action>
+  
+  <action name="v_view_yaw_right">
+   <rebind input="js1_hat1_right"/>
+  </action>
+  
+  <action name="v_view_yaw_left">
+   <rebind input="js1_hat1_left"/>
+  </action>
+
   <action name="v_ifcs_toggle_vector_decoupling">
    <rebind input="js1_button28"/>
   </action>
@@ -121,29 +120,29 @@ review add bindings cleared a few from view and aim
    <rebind input="js1_slider2"/>
   </action>
   
-    <action name="v_view_toggle_headlook_mode">
-      <rebind input="kb1_z" activationMode="press" multiTap="0"/>
-    </action>
+  <action name="v_view_toggle_headlook_mode">
+    <rebind input="kb1_z" activationMode="press" multiTap="0"/>
+  </action>
 	
-    <action name="v_view_freelook_mode">
-        <rebind input="kb1_z"/>
-    </action>
+  <action name="v_view_freelook_mode">
+      <rebind input="kb1_z"/>
+  </action>
 	
-    <action name="v_view_screen_focus_left">
-        <rebind input="kb1_z+a" />
-    </action>
+  <action name="v_view_screen_focus_left">
+      <rebind input="kb1_z+a" />
+  </action>
 	
-    <action name="v_view_screen_focus_right">
-        <rebind input="kb1_z+d" />
-    </action>
+  <action name="v_view_screen_focus_right">
+      <rebind input="kb1_z+d" />
+  </action>
 	
-    <action name="v_view_screen_focus_up">
-        <rebind input="kb1_z+w" />
-    </action>
+  <action name="v_view_screen_focus_up">
+      <rebind input="kb1_z+w" />
+  </action>
 	
-    <action name="v_view_screen_focus_down">
-        <rebind input="kb1_z+s" />
-    </action>
+  <action name="v_view_screen_focus_down">
+      <rebind input="kb1_z+s" />
+  </action>
   
  </actionmap>
 
@@ -319,7 +318,15 @@ review add bindings cleared a few from view and aim
   <action name="v_aim_yaw_right">
    <rebind input="js1_ "/>
   </action>
-
+  
+  <action name="v_aim_yaw">
+   <rebind input="js1_"/>
+  </action>
+  
+  <action name="v_aim_pitch">
+   <rebind input="js1_"/>
+  </action>
+  
   <action name="v_target_nearest_hostile">
    <rebind input="js1_ "/>
   </action>
@@ -347,16 +354,12 @@ review add bindings cleared a few from view and aim
   <action name="v_aim_yaw_mouse">
    <rebind input="mo1_ "/>
   </action>
+  
+  <action name="v_target_reticle_focus">
+   <rebind input="js1_ "/>
+  </action>
  
 <!-- add bindings -->
- 
-  <action name="v_aim_yaw">
-   <rebind input="js1_"/>
-  </action>
-  
-  <action name="v_aim_pitch">
-   <rebind input="js1_"/>
-  </action>
  
   <action name="v_target_cycle_reticle_mode">
    <rebind input="js1_button12"/>
@@ -402,7 +405,18 @@ review add bindings cleared a few from view and aim
   <action name="v_target_cycle_hostile_fwd">
    <rebind input="js1_ "/>
   </action>
- 
+  
+  <action name="v_aim_yaw_mouse">
+   <rebind input="mo1_ "/>
+  </action>
+  
+  <action name="v_aim_pitch_mouse">
+   <rebind input="mo1_ "/>
+  </action>
+  
+  <action name="v_target_reticle_focus">
+   <rebind input="js1_ "/>
+  </action>
  <!-- add bindings -->
  
   <action name="v_aim_yaw">
@@ -451,7 +465,11 @@ review add bindings cleared a few from view and aim
   <action name="v_weapon_launch_missile">
    <rebind input="js1_button5"/>
   </action>
- 
+  
+  <action name="v_weapon_arm_missile">
+   <rebind input="js1_button29"/>
+  </action>
+  
  </actionmap>
 
  <actionmap name="spaceship_defensive">
@@ -489,6 +507,10 @@ review add bindings cleared a few from view and aim
   
   <!-- add bindings -->
   
+  <action name="scan_toggle_mode">
+   <rebind input="kb1_capslock"/>
+  </action>
+  
   <action name="xi_movex">
    <rebind input="js1_rotx"/>
   </action>
@@ -497,30 +519,50 @@ review add bindings cleared a few from view and aim
    <rebind input="js1_roty"/>
   </action>
   
-  <action name="Crouch">
-   <rebind input="kb1_mouse4"/>
-  </action>
-   
-  <action name="scan_toggle_mode">
-   <rebind input="kb1_capslock"/>
-  </action> 
- 
-  <action name="spectate_zoom_out">
-   <rebind input="js1_button7"/>
-  </action>
-  
-  <action name="spectate_zoom_in">
-   <rebind input="js1_button6"/>
-  </action>
-
   <action name="xi_rotateyaw">
    <rebind input="js1_x"/>
   </action>
-
+  
   <action name="xi_rotatepitch">
    <rebind input="js1_y"/>
   </action>
   
+  <action name="crouch">
+   <rebind input="kb1_mouse4"/>
+  </action>
+  
+  <action name="xi_crouch">
+   <rebind input="js1_button22"/>
+  </action>
+  
+  <action name="sprint">
+   <rebind input="js1_button21"/>
+  </action>
+  
+  <action name="attack1">
+   <rebind input="js1_button1"/>
+  </action>
+  
+  <action name="weapon_melee">
+   <rebind input="js1_button2"/>
+  </action>
+  
+  <action name="grenade">
+   <rebind input="js1_button3"/>
+  </action>
+  
+  <action name="zoom">
+   <rebind input="js1_button17"/>
+  </action>
+  
+  <action name="zoom_out">
+   <rebind input="js1_button7"/>
+  </action>
+  
+  <action name="zoom_in">
+   <rebind input="js1_button6"/>
+  </action>
+ 
  </actionmap>
 
  <actionmap name="zero_gravity_eva">
@@ -529,37 +571,60 @@ review add bindings cleared a few from view and aim
   
   <!-- add bindings -->
  
+  <action name="eva_view_yaw_left">
+   <rebind input="js1_hat1_left"/>
+  </action>
+  
+  <action name="eva_view_yaw_right">
+   <rebind input="js1_hat1_right"/>
+  </action>
+  
+  <action name="eva_view_pitch_down">
+   <rebind input="js1_hat1_down"/>
+  </action>
+  
+  <action name="eva_view_pitch_up">
+   <rebind input="js1_hat1_up"/>
+  </action>
+
   <action name="eva_pitch">
    <rebind input="js1_y"/>
   </action>
-
+  
   <action name="eva_yaw">
    <rebind input="js1_x"/>
   </action>
-
+  
   <action name="eva_roll">
    <rebind input="js1_z"/>
   </action>
-
+  
   <action name="eva_strafe_vertical">
    <rebind input="js1_rotz"/>
-  </action>
-
-  <action name="eva_strafe_longitudinal">
-   <rebind input="js1_roty"/>
   </action>
   
   <action name="eva_strafe_lateral">
    <rebind input="js1_rotx"/>
   </action>
- 
+  
+  <action name="eva_brake">
+   <rebind input="js1_button19"/>
+  </action>
+  
+  <action name="eva_boost">
+   <rebind input="js1_button21"/>
+  </action>
+  
+  <action name="eva_strafe_longitudinal">
+   <rebind input="js1_roty"/>
+  </action>
+  
  </actionmap>
  
  
  <actionmap name="vehicle_general">
   <!-- clear bindings -->
   
-  <!-- add bindings -->
   <action name="v_view_pitch">
    <rebind input="js1_"/>
   </action>
@@ -568,12 +633,34 @@ review add bindings cleared a few from view and aim
    <rebind input="js1_"/>
   </action>
 
-  <action name="v_view_zoom_out">
-   <rebind input="js1_button7"/>
+  <!-- add bindings -->
+
+  <action name="v_flightready">
+   <rebind input="kb1_f5"/>
   </action>
   
+  <action name="v_doors_open_all">
+   <rebind input="kb1_f7"/>
+  </action>
+  
+  <action name="v_doors_close_all">
+   <rebind input="kb1_f7"/>
+  </action>
+  
+  <action name="v_doors_lock_all">
+   <rebind input="kb1_f8"/>
+  </action>
+ 
+  <action name="v_doors_unlock_all">
+   <rebind input="kb1_f8"/>
+  </action>
+
   <action name="v_view_zoom_in">
    <rebind input="js1_button6"/>
+  </action>
+  
+  <action name="v_view_zoom_out">
+   <rebind input="js1_button7"/>
   </action>
   
   <action name="v_view_look_behind">
@@ -603,8 +690,16 @@ review add bindings cleared a few from view and aim
   
   <!-- add bindings -->
   
+  <action name="v_brake">
+   <rebind input="js1_button19"/>
+  </action>
+  
   <action name="v_yaw">
    <rebind input="js1_x"/>
+  </action>
+  
+  <action name="v_move">
+   <rebind input="js1_roty"/>
   </action>
   
   <action name="v_attack2">
@@ -619,11 +714,15 @@ review add bindings cleared a few from view and aim
    <rebind input="js1_slider2"/>
   </action>
   
+  <action name="v_brake">
+   <rebind input="js1_button19"/>
+  </action>
+  
  </actionmap>
   
  <actionmap name="vehicle_gunner">
 
- <!-- clear bindings -->
+  <!-- clear bindings -->
   
   <!-- add bindings -->
  
@@ -645,6 +744,14 @@ review add bindings cleared a few from view and aim
  
   <action name="spectate_zoom">
    <rebind input="js1_slider2"/>
+  </action>
+  
+  <action name="spectate_zoom_in">
+   <rebind input="js1_button6"/>
+  </action>
+  
+  <action name="spectate_zoom_out">
+   <rebind input="js1_button7"/>
   </action>
   
  </actionmap>
@@ -669,16 +776,19 @@ review add bindings cleared a few from view and aim
    <rebind input="js1_ "/>
   </action>
   
-  <action name="pc_select">
+  <action name="pc_focus">
    <rebind input="js1_ "/>
   </action>
   
-  <action name="pc_focus">
+  <action name="pc_throw_decrease">
    <rebind input="js1_ "/>
   </action>
   
   <!-- add bindings -->
  
+  <action name="pc_select">
+   <rebind input="js1_button1"/>
+  </action>
   
  </actionmap>
  
