@@ -119,31 +119,7 @@ review add bindings cleared a few from view and aim
   <action name="v_view_dynamic_focus">
    <rebind input="js1_slider2"/>
   </action>
-  
-  <action name="v_view_toggle_headlook_mode">
-    <rebind input="kb1_z" activationMode="press" multiTap="0"/>
-  </action>
-	
-  <action name="v_view_freelook_mode">
-      <rebind input="kb1_z"/>
-  </action>
-	
-  <action name="v_view_screen_focus_left">
-      <rebind input="kb1_z+a" />
-  </action>
-	
-  <action name="v_view_screen_focus_right">
-      <rebind input="kb1_z+d" />
-  </action>
-	
-  <action name="v_view_screen_focus_up">
-      <rebind input="kb1_z+w" />
-  </action>
-	
-  <action name="v_view_screen_focus_down">
-      <rebind input="kb1_z+s" />
-  </action>
-  
+
  </actionmap>
 
  <actionmap name="spaceship_movement">
