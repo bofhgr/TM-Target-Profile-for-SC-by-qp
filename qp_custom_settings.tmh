@@ -7,12 +7,17 @@
 //		- Thrustmaster Warthog Dual sticks (WIP)
 //		- Thrustmaster Rudder Pedals (Supported)
 //		- Thrustmaster MFDs (WIP)
-//		- Left Stick (Warthog or TM16000) with Keyboard (WIP)
-//		- Right Stick (Warthog or TM16000) with Mouse (WIP)
+//		- Right Stick (Warthog or TM16000) with Keyboard (WIP)
+//		- Left Stick (Warthog or TM16000) with Mouse (WIP)
 //		
 //	Written by qp
 // 		https://robertsspaceindustries.com/citizens/q-p
 //
+//*****************************************************************************************************************
+//Version Info
+//Updated for Star Citizen 3.0 PTU
+//Last Update: Dec 01 2017
+//*****************************************************************************************************************
 //*****************************************************************************************************************
 //
 // YOU MAY EDIT THIS FILE ACCORDING TO THE INSTRUCTIONS
@@ -77,9 +82,8 @@
 
 	//// Please put "1" instead of 0 if you want to swap this axis between the two
 	
-	//// This section is not implemented yet.
-	
-	// define Controller_Warthog_HOTAS_Swap_Roll_Yaw 0 // Swap between Roll and Yaw by default
+	//// Warthog HOTAS Joystick, swap to Roll on Stick, Yaw on Pedals (or Yaw or SCX if you don't have pedals) (default is 0, no swap)
+	define Controller_Swap_Roll_Yaw 0 //Work in progress
 	// define Controller_TM16000_DualStick_Swap_Roll_Yaw 0 // Swap between Roll and Yaw for the Right stick by default
 	// define Controller_TM16000_DualStick_Swap_Roll_StrafeUD 0 // Swap between Roll and Strafe Up/Down for the twist axis on both sticks by default
 	// define Controller_TM Warthog_DualStick
@@ -98,7 +102,7 @@
 	// near end of this file is a table for special characters you might want to use
 
 // Push To Talk button 
-	//depending on what type of key you use for PPT, you'll need to change it using TARGET definition of that button. Ask qp if you are not sure how.
+	//depending on what type of key you use for PPT, you'll need to change it using TARGET definition of that button. See at the end of this file for the USB codes that will work regardless your keyboard language ;)
 	//default value is Scroll Lock
 	define Voice_Comms_PPT SCRLCK 
 	
@@ -191,7 +195,9 @@
 	define Power_Distribution_Timer 300 //Default:300
 	define Power_Distribution_Reset_Hold_Timer 500 //Default:500
 	define Countermeasure_Hold_to_ChangeCM_Timer 250 //Default:250
-	define AR_Mode_Timer 1000 //default:3000
+	define AR_Mode_Timer 1000 //default:1000
+	define Zoom_Timer 250 //Default:250
+	define Free_Look_Mode_Toggle_Timer 250 //Default:250
 	
 //*****************************************************************************************************************
 /////////// SECTION 7.0 - LED Control
