@@ -61,6 +61,20 @@ Extract to a folder of your choosing.
 
 Recommended extra step: In TARGET Script Editor under the TOOLS menu, click on OPTIONS and then click the Tab EDITOR. Select the first option so the script auto-loads every time you open the script editor, you will only have to click RUN.
 
+Recomended extra step: Do the below if you face issues with your joysticks not responding after a few minutes of running the script. This is a known issue with Windows Power Management for USB devices that assumes the joysticks are safe to power off when they detect the combined virtual joystick that this script creates. To disable this behaviour you have to do the following once. You will have to re-do these steps if you switch your joystick to another USB slot.
+
+1. Press Windows Key + R to open the run menu. Type Regedit and press enter to open up the Windows Registry Editor.
+2. Navigate from the left side folder-like structure to the location:
+		Computer \ HKEY_LOCAL_MACHINE \ SYSTEM \ CurrentControlSet \ Enum \ USB
+3. Navigate a few items down the USB tree until you see the ones starting with "VID_044..." These are the ThrustMaster Products.
+4. For device represented on this tree starting with VID_044... expand the tree and go to Device Parameters
+5. On the right side of regedit window you will see two settings you need to change from 1 to 0
+	AllowIdlelrplnD3 and
+	EnhancedPowerManagementEnabled
+6. To change these settings just double-click the parameter and on the Edit DWORD window type in Value Data: 0 instead of 1.
+7. Click OK to close the DWORD edit and repeat for both parameters and for each joystick device.
+8. Rebot your PC to apply the change and run the script normaly from now on.
+
 You may find the latest version of qp's Thrustmaster Joystick Button Mappings here: https://1drv.ms/x/s!AuKEmoCXDlmvwdRZCDnmGPjJ3Nmfgw
 
 *****************************************************************************************************************
