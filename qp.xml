@@ -49,9 +49,12 @@ review add bindings cleared a few from view and aim
 <modifiers />
 
  <actionmap name="spaceship_general">
- 
+  <!-- clear bindings -->
+  
+  <!-- add bindings -->
+  
   <action name="v_eject">
-   <rebind input="js1_button24" activationMode="press"/>
+   <rebind input="js1_button24"/>
   </action>
  
  </actionmap>
@@ -126,10 +129,6 @@ review add bindings cleared a few from view and aim
  
   <!-- clear bindings -->
   
-  <action name="v_ifcs_toggle_vector_decoupling">
-   <rebind input="js1_ "/>
-  </action>
-  
   <action name="v_toggle_landing_system">
    <rebind input="js1_ "/>
   </action>
@@ -183,6 +182,10 @@ review add bindings cleared a few from view and aim
   </action>
  
  <!-- add bindings -->
+  
+  <action name="v_ifcs_toggle_vector_decoupling">
+   <rebind input="js1_button28"/>
+  </action>
  
   <action name="v_strafe_lateral">
    <rebind input="js1_rotx"/>
@@ -330,11 +333,7 @@ review add bindings cleared a few from view and aim
   <action name="v_aim_yaw_mouse">
    <rebind input="mo1_ "/>
   </action>
-  
-  <action name="v_target_reticle_focus">
-   <rebind input="js1_ "/>
-  </action>
- 
+
 <!-- add bindings -->
  
   <action name="v_target_cycle_reticle_mode">
@@ -486,7 +485,7 @@ review add bindings cleared a few from view and aim
   <action name="scan_toggle_mode">
    <rebind input="kb1_capslock"/>
   </action>
-  
+  <!-- issue with pressing 'f' fucks up mouse movement/look
   <action name="xi_movex">
    <rebind input="js1_rotx"/>
   </action>
@@ -502,7 +501,7 @@ review add bindings cleared a few from view and aim
   <action name="xi_rotatepitch">
    <rebind input="js1_y"/>
   </action>
-  
+  -->
   <action name="crouch">
    <rebind input="kb1_mouse4"/>
   </action>
@@ -610,26 +609,6 @@ review add bindings cleared a few from view and aim
   </action>
 
   <!-- add bindings -->
-
-  <action name="v_flightready">
-   <rebind input="kb1_f5"/>
-  </action>
-  
-  <action name="v_doors_open_all">
-   <rebind input="kb1_f7"/>
-  </action>
-  
-  <action name="v_doors_close_all">
-   <rebind input="kb1_f7"/>
-  </action>
-  
-  <action name="v_doors_lock_all">
-   <rebind input="kb1_f8"/>
-  </action>
- 
-  <action name="v_doors_unlock_all">
-   <rebind input="kb1_f8"/>
-  </action>
 
   <action name="v_view_zoom_in">
    <rebind input="js1_button6"/>

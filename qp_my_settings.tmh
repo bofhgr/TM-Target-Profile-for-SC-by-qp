@@ -21,6 +21,10 @@
 //USER-CUSTOMISABLE SETTINGS ARE IN qp_custom_settings.tmh file
 //*****************************************************************************************************************
 //
+
+// This file is an example of setting up custom code. This simple flag allows me to quickly switch between my two gaming stations.
+// If you would like me to include something similar for your own needs, please consider supporting me on Patreon. Https://www.patreon.com/qp
+
 // This file is used to help me switch between my 2 setups. 
 // couch setup: big screen projector/home cinema using 2x TM 16000 in dual stick mode
 // gaming room setup: Desk with 3 screens, TM Warthog HOTAS and Pedals

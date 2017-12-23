@@ -56,11 +56,11 @@
 //	 HOSAK: Hands on Stick and Keyboard (Single Stick - Right)
 //	
 //
-	define Controller_Warthog_HOTAS 0 //TM Warthog HOTAS - Fully Supported
+	define Controller_Warthog_HOTAS 1 //TM Warthog HOTAS - Fully Supported
 	
 	define Controller_TM16000_DualStick 1 //TM16000 HOSAS - Fully Supported
 	
-	define Controller_TMFR_Pedals 0 //TM Flight Rudder Pedals - Fully Supported
+	define Controller_TMFR_Pedals 1 //TM Flight Rudder Pedals - Fully Supported
 	
 	define Controller_TM_MFDs 0 //TM Multi Functional Displays - To be added
 	
