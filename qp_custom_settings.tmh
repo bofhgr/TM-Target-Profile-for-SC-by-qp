@@ -4,15 +4,11 @@
 //		- Thrustmaster Warthog HOTAS (Fully Supported)
 //		- Thrustmaster Rudder Pedals (Fully Supported)
 //		- Thrustmaster TM16000 Dual sticks (Fully Supported)
-//		- Thrustmaster FCS HOTAS (WIP)
-//		- Thrustmaster MFDs (TBA)
-//		- Right Stick (Warthog or TM16000) with Keyboard (TBA)
-//		- Left Stick (Warthog or TM16000) with Mouse (TBA)
-//		- Thrustmaster Warthog Dual sticks (TBA)
 //		
 //	Written by qp
 // 		https://robertsspaceindustries.com/citizens/q-p
-//	
+//	To support future development of this script and request features go to:
+//		https://www.patreon.com/qp
 //
 //*****************************************************************************************************************
 //
