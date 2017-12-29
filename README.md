@@ -65,10 +65,9 @@ Extract to a folder of your choosing.
 5. Click on the qp_settings.tmh file from the list, and edit as required. Click the Save icon and click on qp.tmc and then press COMPILE again, the * next to qp_settings.tmh will go away, meaning your changes are saved.
 6. You should see "Compile Succeeded." as a message on the bottom half of TARGET SCRIPT EDITOR.
 7. Press RUN. You should see "main returned 0" - this means everything is OK. To test out-of-game you may press Windows Key and type "game" - select the "setup USB Game controllers". You should only see "Thrustmaster Combined" as your only joystick, no other TM products should be listed there. If not, stop and re-run the script (sometimes joysticks won't properly initialize, you might need to reboot if stop/run a couple times does not fix it)
-8. Launch Star Citizen 3.0. Once in the main menu screen, enable advanced keyboard mappings, go to Options > Keybindings > Advanced Controls Customization > Control Profiles and then scroll down and click "Keyboard Advanced". Under Select Device to Load To, select Keyboard, Mouse, and then click "Load". Once you are back to main menu, press "~" to open the in-game console.
-9. Type the command "pp_rebindkeys " include a space at the end and press enter. You can press "tab" to auto-complete. This will reset all keybindings to defaults. (Not sure if still needed for 3.0)
-10. Type the command "pp_rebindkeys qp". You should see "njoy" message. You may close the console by pressing "~". 
-11. Profit! njoy :)
+8. Launch Star Citizen 3.0. Once in the main menu screen, enable advanced keyboard mappings: go to Options > Keybindings > Advanced Controls Customization > Control Profiles and then scroll down and click "Keyboard Advanced". Under Select Device to Load To, select Keyboard, Mouse, and then click "Load". Once you are back to main menu, press "~" to open the in-game console.
+9. Type the command "pp_rebindkeys qp". You should see "njoy" message. You may close the console by pressing "~". 
+10. Profit! njoy :)
 
 Recommended extra step: In TARGET Script Editor under the TOOLS menu, click on OPTIONS and then click the Tab EDITOR. Select the first option so the script auto-loads every time you open the script editor, you will only have to click RUN.
 
